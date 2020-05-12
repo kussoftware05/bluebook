@@ -16,7 +16,7 @@ namespace Symfony\Polyfill\Ctype;
  *
  * @internal
  *
- * @author Gert de Pagter <BackEndTea@gmail.com>
+ * @author Gert de Pagter <adminTea@gmail.com>
  */
 final class Ctype
 {

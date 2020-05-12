@@ -886,7 +886,7 @@ class Yii2 extends Framework implements ActiveRecord, MultiSession, PartedModule
     public function _backupSession()
     {
         if (isset(Yii::$app) && Yii::$app->session->useCustomStorage) {
-            throw new ModuleException("Yii2 MultiSession only supports the default session backend.");
+            throw new ModuleException("Yii2 MultiSession only supports the default session admin.");
         }
         return [
             'clientContext' => $this->client->getContext(),

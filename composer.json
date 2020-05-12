@@ -40,7 +40,7 @@
         }
     },
     "scripts": {
-        "run-app" : "php -S localhost:8000 -t backend/web"
+        "run-app" : "php -S localhost:8000 -t admin/web"
     },
     "repositories": [
         {

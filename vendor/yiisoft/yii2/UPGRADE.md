@@ -457,7 +457,7 @@ Upgrade from Yii 2.0.7
   instead of `\InvalidArgumentException`. If you wrap calls of these methods in try/catch block, change expected
   exception class.
 
-* `yii\rbac\ManagerInterface::canAddChild()` method was added. If you have custom backend for RBAC you need to implement
+* `yii\rbac\ManagerInterface::canAddChild()` method was added. If you have custom admin for RBAC you need to implement
   it.
 
 * The signature of `yii\web\User::loginRequired()` was changed. The method has got an extra optional parameter
