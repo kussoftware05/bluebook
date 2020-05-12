@@ -84,4 +84,31 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
+  'ckarjun/yii2-owl-carousel' => 
+  array (
+    'name' => 'ckarjun/yii2-owl-carousel',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@ckarjun/owlcarousel' => $vendorDir . '/ckarjun/yii2-owl-carousel',
+    ),
+  ),
+  'sadovojav/yii2-ckeditor' => 
+  array (
+    'name' => 'sadovojav/yii2-ckeditor',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@sadovojav/ckeditor' => $vendorDir . '/sadovojav/yii2-ckeditor',
+    ),
+  ),
+  'ruskid/yii2-csv-importer' => 
+  array (
+    'name' => 'ruskid/yii2-csv-importer',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@ruskid/csvimporter' => $vendorDir . '/ruskid/yii2-csv-importer',
+    ),
+  ),
 );
