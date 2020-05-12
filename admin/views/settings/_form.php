@@ -11,9 +11,9 @@ use yii\widgets\ActiveForm;
 <div class="settings-form">
 
     <?php $form = ActiveForm::begin(); ?>
-	<?php /*?><?= $form->field($model, 'facebook')->textInput() ?>
-	<?= $form->field($model, 'linkedin')->textInput() ?>
-	<?= $form->field($model, 'twitter')->textInput() ?>
+	<?= $form->field($model, 'facebook_add')->textarea(['rows' => '6']) ?>
+	<?= $form->field($model, 'google_add')->textarea(['rows' => '6']) ?>
+	<?php /*?><?= $form->field($model, 'twitter')->textInput() ?>
 	
 	<?= $form->field($model, 'copyright')->textInput() ?><?php */?>
 	<?= $form->field($model, 'admin_email')->textInput() ?>

@@ -54,7 +54,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['username','first_name', 'last_name', 'gender', 'password_hash', 'email'], 'required'],
             [['gender', 'status', 'usertype'], 'string'],
             [['created_at', 'updated_at',  'user_pic', 'auth_key' ], 'safe'],
-            [['subscription_id', 'total_posts'], 'integer'],
             [['username', 'first_name', 'last_name', 'user_pic', 'password_hash', 'confirm_password', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 40],
@@ -86,12 +85,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password_reset_token' => 'Password Reset Token',
             'email' => 'Email',
             'phone' => 'Phone',
-            'userStatus' => 'User Status',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'usertype' => 'User Type',
-            'subscription_id' => 'Subscription ID',
-            'total_posts' => 'Total Posts',
             'access_token' => 'Access Token',
         ];
     }
@@ -256,17 +253,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUserType()
     {
-        if ( $this->usertype == 'S' )
+        if ( $this->usertype == 'NORMAL' )
         {
-            return '<span class="label label-success">Seller</span>'; 
+            return '<span class="label label-success">NORMAL</span>'; 
         }
-        else if ( $this->usertype == 'B' )
+        else if ( $this->usertype == 'ADMIN' )
         {
-            return '<span class="label label-danger">Buyer</span>'; 
+            return '<span class="label label-danger">ADMIN</span>'; 
         }
         else
         {
-            return '<span class="label label-warning">ADMIN</span>'; 
+            return '<span class="label label-warning">USER</span>'; 
         }
     }
 }

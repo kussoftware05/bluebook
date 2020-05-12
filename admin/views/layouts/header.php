@@ -110,8 +110,8 @@ if(!$id )
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <?php if((Yii::$app->user->identity) && Yii::$app->user->identity->image_id != NULL){?>
-				<img src="../images/user/<?php echo Yii::$app->user->identity->image_id;?> " height="40px" width="40px" >
+                <?php if((Yii::$app->user->identity) && Yii::$app->user->identity->user_pic != NULL){?>
+				<img src="../images/user/<?php echo Yii::$app->user->identity->user_pic;?> " height="40px" width="40px" >
 					<?php //= Html::img('@web/img/echo Yii::$app->user->identity->user_pic;', ['class' => 'user-image', 'alt'=>'User Image']) ?>
                     <?php }
 					else

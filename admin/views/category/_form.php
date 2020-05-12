@@ -6,20 +6,28 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model admin\models\Category */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerCssFile("/bluebook/admin/css/admin.css");
 ?>
 
 <div class="category-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <div class="pesonal_details col-sm-6 .col-md-6 sereg box box-danger">
 
-    <?= $form->field($model, 'parent_id')->textInput() ?>
+        <?php $form = ActiveForm::begin(); ?>
+                <h3>User Details</h3> 
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', ]) ?>
+
+                <div class="form-group">
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
+
+                <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>

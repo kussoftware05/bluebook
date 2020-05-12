@@ -2,16 +2,20 @@
 
 namespace admin\models;
 
-// use Yii;
+use Yii;
 
 /**
  * This is the model class for table "settings".
  *
  * @property integer $settings_id
- * @property integer $free_allowed_registration
- * @property integer $yearly_fee
- * @property string $paypal_email
- * @property integer $admin_email
+ * @property string $facebook_add
+ * @property string $google_add
+ * @property string $twitter
+ * @property string $admin_email
+ * @property string $copyright
+ * @property string $contact_address
+ * @property string $contact_phone
+ * @property string $contact_email
  */
 class Settings extends \yii\db\ActiveRecord
 {
@@ -31,7 +35,7 @@ class Settings extends \yii\db\ActiveRecord
         return [
             [['admin_email'], 'required'],
 			[['contact_email', 'contact_phone', 'contact_address'], 'safe'],
-            [['admin_email','facebook','linkedin','twitter','copyright'], 'string', 'max' => 255]
+            [['admin_email','facebook_add','google_add','twitter','copyright'], 'string', 'max' => 255]
         ];
     }
 
@@ -42,8 +46,8 @@ class Settings extends \yii\db\ActiveRecord
     {
         return [
             'settings_id' => 'Settings ID',
-			'facebook' => 'facebook url',
-			'linkedin'=> 'linkedin url',
+			'facebook' => 'Facebook Adds',
+			'google_add'=> 'Google Adds',
 			'twitter' =>'twitter url',
 			'copyright' =>'Copyright'
 			

@@ -7,19 +7,19 @@ use admin\models\Settings;
 use admin\models\User;
 $id = 0;
 $uid=0;
-//$settings = Settings::find()->all();
+$settings = Settings::find()->all();
 $changepassword = User::find()->all();
 if(!empty($changepassword))
  {
 	 $uid = $changepassword[0]->id;
  }
-/*
+
  if(!empty($settings))
  {
 	 $id = $settings[0]->settings_id;
  }
 
-*/
+
 /*if (($model = settings::findOne($id)) !== null) {
             return $model;
         } else {
@@ -125,7 +125,7 @@ if(!empty($changepassword))
                     [
                         'label' => 'Settings',
                         'icon' => 'fa fa-cog',
-                       'url' => ($id>0)?['/settings/update?id='.$id]:['/settings/create']
+					   'url' => ($id>0)?['/settings/update?id='.$id]:['/settings/create'],
                     ],
                     [
                         'label' => 'User',

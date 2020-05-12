@@ -18,17 +18,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'short_desp')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'published_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?php //echo $form->field($model, 'updated_at')->textInput() ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'draft' => 'Draft', 'published' => 'Published', ], ['prompt' => '']) ?>
+     <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', 'P'=> 'Pending' ]) ?>
 
     <?= $form->field($model, 'cat_id')->textInput() ?>
 
-    <?= $form->field($model, 'image_id')->textInput() ?>
+    <?= $form->field($model, 'news_image')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

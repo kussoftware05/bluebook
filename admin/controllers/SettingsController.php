@@ -2,66 +2,125 @@
 
 namespace admin\controllers;
 
-use  Yii;
-use yii\filters\AccessControl;
+use Yii;
+use admin\models\Settings;
 use yii\web\Controller;
-use admin\models\AdminUser;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
-
+/**
+ * SettingsController implements the CRUD actions for settings model.
+ */
 class SettingsController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['index', 'change-email', 'change-password'],
-                'rules' => [
-                    // allow authenticated users
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
+    /**
+     * Lists all settings models.
+     * @return mixed
+     */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new SettingsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-    public function actionChangeEmail() 
+    /**
+     * Displays a single settings model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
     {
-        if(Yii::$app->request->isPost) {
-            if(AdminUser::changeAdminEmailAddress(Yii::$app->user->identity->username,Yii::$app->request->post('admin_email'))) {
-                return $this->redirect('index');
-            }
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new settings model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Settings();
+        $settings = Settings::find()->all();
+ 
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+	
+			  return $this->redirect(['update', 'id' => $model->settings_id]);
+
         } else {
-            return $this->render('change_email',[
-                'email' => Yii::$app->user->identity->email
+            return $this->render('create', [
+                'model' => $model,
             ]);
         }
-      
     }
 
-    public function actionChangePassword()
+    /**
+     * Updates an existing settings model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
     {
-        if(Yii::$app->request->isPost) {
-            $request = Yii::$app->request;
-            $current_p = $request->post('current_p');
-            $new_p = $request->post('new_p');
-            $retyped_p = $request->post('p_agin'); 
-            $admin = new AdminUser;
-            if($admin->changeUserPassword($current_p,$new_p,$retyped_p)) {
-                return $this->redirect('index');
-            }
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['update', 'id' => $model->settings_id]);
         } else {
-            return $this->render('change_password');
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing settings model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the settings model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return settings the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = settings::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

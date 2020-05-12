@@ -70,7 +70,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        //$this->layout = 'loginLayout';
 		$this->layout = 'login';
 
         if (!Yii::$app->user->isGuest) {
@@ -79,7 +78,8 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['dashboard/index']);
+            //return $this->goBack();
         } else {
             $model->password = '';
 
@@ -107,7 +107,6 @@ class SiteController extends Controller
      */
     public function actionRegister()
     {
-        //$this->layout = 'loginLayout';
 		$this->layout = 'login';
         
         $model = new LoginForm;

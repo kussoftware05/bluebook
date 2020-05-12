@@ -26,9 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'name',
-            'parent_id',
+            [
+				'attribute' => 'Status',
+				'format' => 'raw',
+				'value' =>  function ($model) {
+                    return ($model ->status == 'Y') ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">In-Active</span>';
+                },
+				'filter'=> ['Y'=>'Active','N'=>'Non-Active'],
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

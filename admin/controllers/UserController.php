@@ -8,6 +8,7 @@ use admin\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -64,15 +65,34 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+        
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ( $model->load(Yii::$app->request->post()) ) {
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            if ( $model->validate() )
+            {
+                $uploadedFile = UploadedFile::getInstance($model,'user_pic');
+                if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+                {
+                    $uploadedFile->saveAs(Yii::getAlias('@webroot/images/user/').$uploadedFile -> name);
+                    $model->user_pic = $uploadedFile -> name;	
+                }
+                $model->save();
+                Yii::$app->session->setFlash('success', "User Created Successfully");	
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+                return $this->redirect(['create']);  
+            }
+            
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -86,13 +106,40 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ( $model->load(Yii::$app->request->post()) ) {
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ( $model->validate() )
+            {
+                $uploadedFile = UploadedFile::getInstance($model,'user_pic');
+
+                if ( !is_null( $uploadedFile ) )
+                {
+                    if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+                    {
+                        $uploadedFile->saveAs(Yii::getAlias('@webroot/images/user/').$uploadedFile -> name);
+                        $model->user_pic = $uploadedFile -> name;	
+                    }
+                }
+                else
+                {
+                    $model->user_pic = $this->findModel($id)->user_pic;
+                }
+               
+                $model->save();
+                Yii::$app->session->setFlash('success', "User Updated Successfully");	
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+                return $this->redirect(['index']);  
+            }
+
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

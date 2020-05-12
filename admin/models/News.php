@@ -16,7 +16,7 @@ use Yii;
  * @property string|null $updated_at
  * @property string|null $status
  * @property int|null $cat_id
- * @property int|null $image_id
+ * @property string|null $news_image
  *
  * @property Category $cat
  * @property Image $image
@@ -40,11 +40,10 @@ class News extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['content', 'status'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
-            [['cat_id', 'image_id'], 'integer'],
-            [['title', 'short_desp', 'author'], 'string', 'max' => 255],
+            [['cat_id'], 'integer'],
+            [['title', 'short_desp', 'author', 'news_image'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['image_id' => 'id']],
         ];
     }
 
@@ -57,13 +56,13 @@ class News extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'content' => 'Content',
-            'short_desp' => 'Short Desp',
+            'short_desp' => 'Short Description',
             'author' => 'Author',
             'published_at' => 'Published At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
             'cat_id' => 'Cat ID',
-            'image_id' => 'Image ID',
+            'news_image' => 'Image',
         ];
     }
 

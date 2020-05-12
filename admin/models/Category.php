@@ -31,7 +31,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['parent_id'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'status'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
     }
