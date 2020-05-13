@@ -17,7 +17,7 @@ class NewsSearch extends News
     public function rules()
     {
         return [
-            [['id', 'cat_id', 'image_id'], 'integer'],
+            [['id', 'cat_id'], 'integer'],
             [['title', 'content', 'short_desp', 'author', 'published_at', 'updated_at', 'status'], 'safe'],
         ];
     }
@@ -62,7 +62,6 @@ class NewsSearch extends News
             'published_at' => $this->published_at,
             'updated_at' => $this->updated_at,
             'cat_id' => $this->cat_id,
-            'image_id' => $this->image_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

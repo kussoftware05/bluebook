@@ -30,7 +30,8 @@
         "mpdf/mpdf": "dev-master",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "linslin/yii2-curl": "*",
-		"microsoft/azure-storage-blob": "~1.0"
+		"microsoft/azure-storage-blob": "~1.0",
+        "kartik-v/yii2-widget-datepicker": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

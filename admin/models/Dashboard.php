@@ -129,7 +129,6 @@ class Dashboard
      */
     public function getTotalUser()
     {
-
         $count = (new Query)
         ->from('user')
         ->count();

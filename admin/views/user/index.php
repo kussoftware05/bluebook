@@ -62,10 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
 				'filter'=> ['Y'=>'Active','N'=>'Non-Active'],
 			],
-            [
-                'class' => 'yii\grid\ActionColumn'
-            ], 
-
+            
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

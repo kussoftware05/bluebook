@@ -58,10 +58,10 @@ class News extends \yii\db\ActiveRecord
             'content' => 'Content',
             'short_desp' => 'Short Description',
             'author' => 'Author',
-            'published_at' => 'Published At',
-            'updated_at' => 'Updated At',
+            'published_at' => 'Published Date',
+            'updated_at' => 'Updated Date',
             'status' => 'Status',
-            'cat_id' => 'Cat ID',
+            'cat_id' => 'Category',
             'news_image' => 'Image',
         ];
     }

@@ -66,13 +66,25 @@ class PageController extends Controller
     {
         $model = new Page();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if ($model->load(Yii::$app->request->post())) 
+		{
+			if($model->save())
+			{
+				Yii::$app->session->setFlash('success', "Page Created Successfully");	
+                return $this->redirect(['index']);
+			}       
+			else
+			{
+				Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+				return $this->redirect(['index']);  
+			}
+		}
+		else
+		{
+			return $this->render('create', [
+				'model' => $model,
+			]);
+		}	
     }
 
     /**
@@ -86,13 +98,25 @@ class PageController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        if ($model->load(Yii::$app->request->post())) 
+		{
+			if($model->save())
+			{
+				Yii::$app->session->setFlash('success', "Page Updated Successfully");	
+                return $this->redirect(['index']);
+			}       
+			else
+			{
+				Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+				return $this->redirect(['index']);  
+			}
+		}
+		else
+		{
+			return $this->render('update', [
+				'model' => $model,
+			]);
+		}	
     }
 
     /**

@@ -13,7 +13,21 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="news-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	<?php if (Yii::$app->session->hasFlash('success')): ?>
+		<div class="alert alert-success alert-dismissable">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    <?= Yii::$app->session->getFlash('success') ?>
+   </div>
+	<?php endif; ?>
 
+	<?php if ( Yii::$app->session->hasFlash('error') ): ?>
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <?= Yii::$app->session->getFlash('error') ?>
+    </div>
+	<?php endif ?>
+	
     <p>
         <?= Html::a('Create News', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -26,16 +40,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'title',
-            'content:ntext',
+            'content:html',
             'short_desp',
-            'author',
-            //'published_at',
-            //'updated_at',
-            //'status',
-            //'cat_id',
-            //'image_id',
+            [
+				'attribute' => 'Status',
+				'format' => 'raw',
+				'value' =>  function ($model) {
+                    return ($model ->status == 'Y') ? '<span class="label label-success">Active</span>' : (($model ->status == 'N')? '<span class="label label-danger">In-Active</span>' : '<span class="label label-warning">Pending</span>');
+                },
+				'filter'=> ['Y'=>'Active','N'=>'Non-Active', 'P' => 'Pending'],
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

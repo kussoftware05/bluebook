@@ -111,4 +111,67 @@ return array (
       '@ruskid/csvimporter' => $vendorDir . '/ruskid/yii2-csv-importer',
     ),
   ),
+  '2amigos/yii2-ckeditor-widget' => 
+  array (
+    'name' => '2amigos/yii2-ckeditor-widget',
+    'version' => '2.1.0.0',
+    'alias' => 
+    array (
+      '@dosamigos/ckeditor' => $vendorDir . '/2amigos/yii2-ckeditor-widget/src',
+    ),
+  ),
+  '2amigos/yii2-date-picker-widget' => 
+  array (
+    'name' => '2amigos/yii2-date-picker-widget',
+    'version' => '1.0.7.0',
+    'alias' => 
+    array (
+      '@dosamigos/datepicker' => $vendorDir . '/2amigos/yii2-date-picker-widget/src',
+    ),
+  ),
+  'wokster/yii2-owl-carousel-widget' => 
+  array (
+    'name' => 'wokster/yii2-owl-carousel-widget',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@wokster/owlcarousel' => $vendorDir . '/wokster/yii2-owl-carousel-widget',
+    ),
+  ),
+  'kartik-v/yii2-widget-fileinput' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-fileinput',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput/src',
+    ),
+  ),
+  'yidas/yii2-bower-asset' => 
+  array (
+    'name' => 'yidas/yii2-bower-asset',
+    'version' => '2.0.13.1',
+    'alias' => 
+    array (
+      '@yidas/yii2BowerAsset' => $vendorDir . '/yidas/yii2-bower-asset',
+    ),
+  ),
+  'linslin/yii2-curl' => 
+  array (
+    'name' => 'linslin/yii2-curl',
+    'version' => '1.4.0.0',
+    'alias' => 
+    array (
+      '@linslin/yii2/curl' => $vendorDir . '/linslin/yii2-curl',
+    ),
+  ),
+  'kartik-v/yii2-widget-datepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-datepicker',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker/src',
+    ),
+  ),
 );

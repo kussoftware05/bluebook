@@ -168,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
       </div>
 
-<?php $this->registerJsFile("/outboard/admin/js/dashboard.js"); ?>
+<?php $this->registerJsFile("/bluebook/admin/js/dashboard.js"); ?>
 </section>
 
 

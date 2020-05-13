@@ -28,7 +28,7 @@ class Page extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['content'], 'string'],
+            [['content', 'status'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'unique'],
         ];
@@ -43,6 +43,7 @@ class Page extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'content' => 'Content',
+			'status' => 'Status'
         ];
     }
 }

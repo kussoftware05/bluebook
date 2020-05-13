@@ -13,7 +13,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="page-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	<?php if (Yii::$app->session->hasFlash('success')): ?>
+		<div class="alert alert-success alert-dismissable">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    <?= Yii::$app->session->getFlash('success') ?>
+   </div>
+	<?php endif; ?>
 
+	<?php if ( Yii::$app->session->hasFlash('error') ): ?>
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <?= Yii::$app->session->getFlash('error') ?>
+    </div>
+	<?php endif ?>
     <p>
         <?= Html::a('Create Page', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -28,7 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'content:ntext',
+            'content:html',
+			[
+				'attribute' => 'Status',
+				'format' => 'raw',
+				'value' =>  function ($model) {
+                    return ($model ->status == 'Y') ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">In-Active</span>';
+                },
+				'filter'=> ['Y'=>'Active','N'=>'Non-Active', 'P' => 'Pending'],
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

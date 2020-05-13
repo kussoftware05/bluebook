@@ -8,6 +8,7 @@ use admin\models\NewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -66,13 +67,31 @@ class NewsController extends Controller
     {
         $model = new News();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ( $model->load(Yii::$app->request->post()) ) {
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            if ( $model->validate() )
+            {
+                $uploadedFile = UploadedFile::getInstance($model,'news_image');
+                if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+                {
+                    $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
+                    $model->news_image = $uploadedFile -> name;	
+                }
+                $model->save();
+                Yii::$app->session->setFlash('success', "News Created Successfully");	
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+                return $this->redirect(['create']);  
+            }
+            
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -86,13 +105,41 @@ class NewsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ($model->load(Yii::$app->request->post())) 
+		{
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($model->validate())
+            {
+                $uploadedFile = UploadedFile::getInstance($model,'news_image');
+
+                if ( !is_null( $uploadedFile ) )
+                {
+                    if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+                    {
+                        $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
+                        $model->news_image = $uploadedFile -> name;	
+                    }
+                }
+                else
+                {
+                    $model->news_image = $this->findModel($id)->news_image;
+                }
+               
+                $model->save();
+                Yii::$app->session->setFlash('success', "News Updated Successfully");	
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Validation Error Please try again");	
+                return $this->redirect(['index']);  
+            }
+
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

@@ -253,11 +253,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUserType()
     {
-        if ( $this->usertype == 'NORMAL' )
+        if ( $this->usertype == 'G' )
         {
-            return '<span class="label label-success">NORMAL</span>'; 
+            return '<span class="label label-success">General</span>'; 
         }
-        else if ( $this->usertype == 'ADMIN' )
+        else if ( $this->usertype == 'A' )
         {
             return '<span class="label label-danger">ADMIN</span>'; 
         }

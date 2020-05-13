@@ -15,11 +15,13 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '180092cfc969a12e06f2132a203a3184' => __DIR__ . '/..' . '/codeception/verify/src/Codeception/function.php',
+        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -32,26 +34,50 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
+            'yidas\\yii2BowerAsset\\' => 21,
+        ),
+        'w' => 
+        array (
+            'wokster\\owlcarousel\\' => 20,
+        ),
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+            'sadovojav\\ckeditor\\' => 19,
         ),
         'r' => 
         array (
+            'ruskid\\csvimporter\\' => 19,
             'rmrevin\\yii\\fontawesome\\' => 24,
         ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'l' => 
+        array (
+            'linslin\\yii2\\curl\\' => 18,
+        ),
         'k' => 
         array (
             'kartik\\sidenav\\' => 15,
+            'kartik\\plugins\\fileinput\\' => 25,
+            'kartik\\file\\' => 12,
+            'kartik\\date\\' => 12,
             'kartik\\base\\' => 12,
         ),
         'f' => 
         array (
             'froala\\froalaeditor\\' => 20,
         ),
+        'd' => 
+        array (
+            'dosamigos\\datepicker\\' => 21,
+            'dosamigos\\ckeditor\\' => 19,
+        ),
         'c' => 
         array (
+            'ckarjun\\owlcarousel\\' => 20,
             'cebe\\markdown\\' => 14,
         ),
         'W' => 
@@ -78,6 +104,7 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
@@ -86,9 +113,17 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         array (
             'Opis\\Closure\\' => 13,
         ),
+        'M' => 
+        array (
+            'Mpdf\\' => 5,
+            'MicrosoftAzure\\Storage\\Common\\' => 30,
+            'MicrosoftAzure\\Storage\\Blob\\' => 28,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
@@ -145,6 +180,26 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'yidas\\yii2BowerAsset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yidas/yii2-bower-asset',
+        ),
+        'wokster\\owlcarousel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wokster/yii2-owl-carousel-widget',
+        ),
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
+        'sadovojav\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sadovojav/yii2-ckeditor',
+        ),
+        'ruskid\\csvimporter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ruskid/yii2-csv-importer',
+        ),
         'rmrevin\\yii\\fontawesome\\' => 
         array (
             0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
@@ -155,9 +210,25 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
+        'linslin\\yii2\\curl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/linslin/yii2-curl',
+        ),
         'kartik\\sidenav\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-sidenav',
+        ),
+        'kartik\\plugins\\fileinput\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/bootstrap-fileinput',
+        ),
+        'kartik\\file\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-fileinput/src',
+        ),
+        'kartik\\date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datepicker/src',
         ),
         'kartik\\base\\' => 
         array (
@@ -166,6 +237,18 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         'froala\\froalaeditor\\' => 
         array (
             0 => __DIR__ . '/..' . '/froala/yii2-froala-editor/src',
+        ),
+        'dosamigos\\datepicker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-date-picker-widget/src',
+        ),
+        'dosamigos\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-ckeditor-widget/src',
+        ),
+        'ckarjun\\owlcarousel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ckarjun/yii2-owl-carousel',
         ),
         'cebe\\markdown\\' => 
         array (
@@ -235,6 +318,10 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         array (
             0 => __DIR__ . '/..' . '/symfony/browser-kit',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -251,9 +338,29 @@ class ComposerStaticInit86981271fb1b2eb59d5a676a484d6316
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
         ),
+        'Mpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+        ),
+        'MicrosoftAzure\\Storage\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/microsoft/azure-storage-common/src/Common',
+        ),
+        'MicrosoftAzure\\Storage\\Blob\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/microsoft/azure-storage-blob/src/Blob',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'Faker\\' => 
         array (

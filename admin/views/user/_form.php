@@ -41,11 +41,10 @@ $this->registerCssFile("/bluebook/admin/css/admin.css");
 		    <?php } ?>
             <?= $form->field($model, 'user_pic')->fileInput(['multiple' => true, 'accept' => 'image/*']) ->label('Profile Picture');?>
 
-            <?= $form->field($model, 'usertype')->dropDownList([ 'N' => 'Normal User', 'A' => 'Admin', ]) ?>
+            <?= $form->field($model, 'usertype')->dropDownList([ 'G' => 'General User', 'A' => 'Admin', ]) ?>
 
             <?= $form->field($model, 'gender')->dropDownList([ 'M' => 'Male', 'F' => 'Female', ], ['prompt' => 'Select Gender']) ?>
-            <?php //echo $form->field($model, 'bio')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
-			<?= $form->field($model, 'bio')->textarea(['rows' => '6']) ?>
+            <?= $form->field($model, 'bio')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
 			<?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', ]) ?>
         </div>
 
