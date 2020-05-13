@@ -68,11 +68,12 @@ class UserController extends Controller
         
         $model = new User();
 
-        if ( $model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
 
-            if ( $model->validate() )
+            if ($model->validate())
             {
-                $uploadedFile = UploadedFile::getInstance($model,'user_pic');
+				$model->password_hash = password_hash($model->password_hash, PASSWORD_DEFAULT);
+			    $uploadedFile = UploadedFile::getInstance($model,'user_pic');
                 if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
                 {
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/user/').$uploadedFile -> name);
