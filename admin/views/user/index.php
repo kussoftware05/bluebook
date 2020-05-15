@@ -55,12 +55,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-				'attribute' => 'Status',
+				'attribute' => 'status',
 				'format' => 'raw',
+				'filter'=> ['Y'=>'Active','N'=>'IN-Active'],
 				'value' =>  function ($model) {
                     return ($model ->status == 'Y') ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">In-Active</span>';
                 },
-				'filter'=> ['Y'=>'Active','N'=>'Non-Active'],
+			],
+			[
+				'attribute' => 'usertype',
+				'format' => 'raw',
+				'filter'=> ['A'=>'ADMIN','G'=>'GENERAL'],
+				'value' =>  function ($model) {
+                    return ($model ->usertype == 'A') ? '<span class="label label-info">ADMIN</span>' : '<span class="label label-warning">GENERAL</span>';
+                },
 			],
             
             ['class' => 'yii\grid\ActionColumn'],
