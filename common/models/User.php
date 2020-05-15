@@ -14,13 +14,12 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $verification_token
+ * @property string $access_token
  * @property string $email
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -28,6 +27,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     //const STATUS_ACTIVE = 10;
 	const STATUS_ACTIVE = 'Y';
+	const TYPE_USER = 'G';
+	const TYPE_ADMIN = 'A';
 
     /**
      * {@inheritdoc}
@@ -209,6 +210,20 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
-    
+	
+	/**
+	* Checking user type is admin or not
+	*/
+    public static function isUserAdmin($username)
+	{
+		if (static::findOne(['username' => $username, 'usertype' => self::TYPE_ADMIN]))
+		{                       
+			 return true;
+		} 
+		else 
+		{
+			echo '<div style="margin-left: 503px;color: red;font-size: 20px;position: absolute;bottom: 250px;"><b>Sorry! Not an authorized user</b></div>';
+			return false;
+		}       
+	}
 }
