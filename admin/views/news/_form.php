@@ -45,6 +45,10 @@ use dosamigos\datepicker\DatePicker;
 				ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name'),
                         [ 'prompt'=>'Select a Category' ] 
                     )->label('Category') ?>
+					
+	<?= $form->field($model, 'newstype')->dropDownList([ 'airtle' => 'Airtle', 'news' => 'News', 'story'=> 'Story' ]) ?>
+	
+	<?= $form->field($model, 'mediatype')->dropDownList([ 'image' => 'Image', 'video' => 'Video', 'embVideo'=> 'Embeded Video' ]) ?>
 	
 	<?php if($model->news_image!=''){?>
      		    <img src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" height="135" width="140" style="border-radius: 50%;" />

@@ -90,11 +90,7 @@ class BusinessController extends Controller
 			}
 			if($model->save())
 			{
-<<<<<<< HEAD:admin/controllers/BusinessController.php
 				Yii::$app->session->setFlash('success', "Business Directory Created Successfully");	
-=======
-				Yii::$app->session->setFlash('success', "Category Created Successfully");	
->>>>>>> 1389c1b0c13cb80f2b7c6b5a8a2c836f1b4be705:admin/controllers/BlogController.php
                 return $this->redirect(['index']);
 			}       
 			else
