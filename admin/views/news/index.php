@@ -8,11 +8,11 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'News';
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 	
 	<?php if (Yii::$app->session->hasFlash('success')): ?>
 		<div class="alert alert-success alert-dismissable">

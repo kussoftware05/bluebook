@@ -19,9 +19,9 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-	<?= $form->field($model, 'content')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
+	<?= $form->field($model, 'content')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic'])->label('Description') ?>
 
-    <?= $form->field($model, 'short_desp')->textInput(['maxlength' => true]) ?>
+    
 
     <?php //echo $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 
@@ -41,10 +41,10 @@ use dosamigos\datepicker\DatePicker;
 
      <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', 'P'=> 'Pending' ]) ?>
 
-	<?= $form->field($model, 'cat_id')->dropDownList(
+	<?php /*echo $form->field($model, 'cat_id')->dropDownList(
 				ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name'),
                         [ 'prompt'=>'Select a Category' ] 
-                    )->label('Category') ?>
+                    )->label('Category')*/ ?>
 					
 	<?= $form->field($model, 'newstype')->dropDownList([ 'airtle' => 'Airtle', 'news' => 'News', 'story'=> 'Story' ]) ?>
 	

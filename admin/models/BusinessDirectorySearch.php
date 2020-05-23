@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use admin\models\BusinessDirectory;
 
 /**
- * BusinessSearch represents the model behind the search form of `admin\models\Business`.
+ * BusinessDirectorySearch represents the model behind the search form of `admin\models\Businessirectory`.
  */
 class BusinessDirectorySearch extends BusinessDirectory
 {
@@ -18,7 +18,7 @@ class BusinessDirectorySearch extends BusinessDirectory
     {
         return [
             [['id'], 'integer'],
-			[['description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'safe'],
+			[['advertisername','description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class BusinessDirectorySearch extends BusinessDirectory
         ]);
 
         $query->andFilterWhere(['like', 'business_name', $this->business_name])
+			->andFilterWhere(['like', 'advertisername', $this->advertisername])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'contactno', $this->contactno])
