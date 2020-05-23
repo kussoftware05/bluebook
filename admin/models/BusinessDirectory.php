@@ -69,7 +69,27 @@ class BusinessDirectory extends \yii\db\ActiveRecord
             'otherinfo' => 'Other Info',
         ];
     }
-
-  
-    
+	/*
+	*	Country list
+	*	return countries Array
+	*/
+	public function getCountries()
+	{
+		$countries = ['0'=>'USA','1'=>'Columbia',
+		'2'=>'UK'
+		];
+		return $countries;
+	}
+    /*
+	*	State list
+	*	return states Array
+	*/
+	public function getStates()
+	{
+		$states = ['0'=>'Alabama','1'=>'Arkansas',
+		'2'=>'Florida',
+		'3'=>'NJ'
+		];
+		return $states;
+	}
 }

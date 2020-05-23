@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="blog-index">
 
+
 	<?php if (Yii::$app->session->hasFlash('success')): ?>
 		<div class="alert alert-success alert-dismissable">
     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -27,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php endif ?>
 
     <p>
+
         <?= Html::a('Create Business Directory', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
@@ -43,7 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				   return strip_tags($data->description);
 				},
 			],
-
             'email',
             'contactno',
             [
