@@ -18,7 +18,7 @@ class NewsSearch extends News
     {
         return [
             [['id', 'cat_id'], 'integer'],
-            [['title', 'content', 'short_desp', 'author', 'published_at', 'updated_at', 'status'], 'safe'],
+            [['title', 'content', 'short_desp', 'author', 'published_at', 'updated_at', 'status', 'mediatype', 'newstype'], 'safe'],
         ];
     }
 
@@ -68,6 +68,8 @@ class NewsSearch extends News
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'short_desp', $this->short_desp])
             ->andFilterWhere(['like', 'author', $this->author])
+			->andFilterWhere(['like', 'mediatype', $this->mediatype])
+			->andFilterWhere(['like', 'newstype', $this->newstype])
             ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
