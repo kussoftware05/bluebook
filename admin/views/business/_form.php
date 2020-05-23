@@ -20,7 +20,7 @@ use admin\models\BusinessDirectory;
             <div class="col-sm-9 col-md-9">
 
                 <?= $form->field($model, 'business_name')->textInput(['maxlength' => true]) ?>
-                
+                <?= $form->field($model, 'advertisername')->textInput(['maxlength' => true]) ?>
                 <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
                 <?php $countries = BusinessDirectory::getCountries();?>
 				<?php $states = BusinessDirectory::getStates();?>

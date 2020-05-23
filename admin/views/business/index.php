@@ -11,7 +11,7 @@ $this->title = 'Business Directory';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="blog-index">
-
+    
 
 	<?php if (Yii::$app->session->hasFlash('success')): ?>
 		<div class="alert alert-success alert-dismissable">
@@ -26,9 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Yii::$app->session->getFlash('error') ?>
     </div>
 	<?php endif ?>
-
-    <p>
-
+	<p>
         <?= Html::a('Create Business Directory', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([

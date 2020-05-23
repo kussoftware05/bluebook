@@ -24,25 +24,27 @@ $img_src = Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg;
         ]) ?>
     </p>
 
-<<<<<<< HEAD:admin/views/business/view.php
-    
-    <img src="<?= $img_src  ?>" width="250" height="200">
-=======
-<<<<<<< HEAD:admin/views/business/view.php
-    
-    <img src="<?= $img_src  ?>" width="250" height="200">
-=======
-    <h1><?= Html::encode($this->title) ?></h1>
-    <img src="<? //= $img_src ?>" width="250" height="200">
->>>>>>> 1389c1b0c13cb80f2b7c6b5a8a2c836f1b4be705:admin/views/blog/view.php
->>>>>>> 9def3276bbad56c09a0c2dd1a592591d3060a4e1:admin/views/blog/view.php
-
+    <?php
+	if($model->bannerimg!=NULL)
+	{
+	?>
+    <img src="<?= $img_src?>" width="250" height="200">
+	<?php
+	}
+	?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             // 'id',
+			'advertisername',
             'business_name',
-            'description',
+			[
+				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
+				'label' => 'Description',
+				'value' => function ($data) {
+				   return strip_tags($data->description);
+				},
+			],
             'email',
             'contactno',
         ],
