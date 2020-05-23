@@ -44,6 +44,7 @@ use dosamigos\datepicker\DatePicker;
 	<?php /*echo $form->field($model, 'cat_id')->dropDownList(
 				ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name'),
                         [ 'prompt'=>'Select a Category' ] 
+
                     )->label('Category')*/ ?>
 					
 	<?= $form->field($model, 'newstype')->dropDownList([ 'airtle' => 'Airtle', 'news' => 'News', 'story'=> 'Story' ]) ?>
