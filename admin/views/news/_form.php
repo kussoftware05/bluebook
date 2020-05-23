@@ -3,11 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use admin\models\Category;
 use dosamigos\ckeditor\CKEditor;
-//use kartik\date\DatePicker;
 use dosamigos\datepicker\DatePicker;
-
+use admin\models\Category;
+use admin\models\User;
 /* @var $this yii\web\View */
 /* @var $model admin\models\News */
 /* @var $form yii\widgets\ActiveForm */
@@ -21,9 +20,9 @@ use dosamigos\datepicker\DatePicker;
 
 	<?= $form->field($model, 'content')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic'])->label('Description') ?>
 
-    
+    <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
 
-    <?php //echo $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 
 	<?= $form->field($model, 'published_at')->widget(
     DatePicker::className(), [
