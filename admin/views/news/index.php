@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use admin\models\User;
 /* @var $this yii\web\View */
 /* @var $searchModel admin\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'News';
 $this->params['breadcrumbs'][] = $this->title;
+$user= User::find()->all();
 ?>
 <div class="news-index">
 
@@ -43,7 +44,15 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             'title',
             'content:html',
-            'short_desp',
+            'newstype',
+			'published_at',
+			[
+				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
+				'label' => 'User',
+				'value' => function ($data) {
+				   return $data->user ? $data->user->first_name : '';;
+				},
+			],
             [
 				'attribute' => 'Status',
 				'format' => 'raw',
@@ -52,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
 				'filter'=> ['Y'=>'Active','N'=>'Non-Active', 'P' => 'Pending'],
 			],
-
+			'mediatype',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

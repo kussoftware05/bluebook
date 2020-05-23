@@ -16,6 +16,7 @@ use Yii;
  * @property string|null $updated_at
  * @property string|null $status
  * @property int|null $cat_id
+ * @property int|null $userId
  * @property string|null $news_image
  * @property string|null $mediatype
  * @property string|null $newstype
@@ -42,7 +43,7 @@ class News extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['content', 'status'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
-            [['cat_id'], 'integer'],
+            [['cat_id','userId'], 'integer'],
             [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
@@ -60,6 +61,7 @@ class News extends \yii\db\ActiveRecord
             'content' => 'Content',
             'short_desp' => 'Short Description',
             'author' => 'Author',
+			'userId' => 'User',
             'published_at' => 'Published Date',
             'updated_at' => 'Updated Date',
             'status' => 'Status',
@@ -70,23 +72,8 @@ class News extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Cat]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCat()
+    public function getUser()
     {
-        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
-    }
-
-    /**
-     * Gets query for [[Image]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getImage()
-    {
-        return $this->hasOne(Image::className(), ['id' => 'image_id']);
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 }
