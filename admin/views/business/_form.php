@@ -3,9 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-<<<<<<< HEAD
 use dosamigos\ckeditor\CKEditor;
-
 use admin\models\User;
 /* @var $this yii\web\View */
 /* @var $model admin\models\Blog */
