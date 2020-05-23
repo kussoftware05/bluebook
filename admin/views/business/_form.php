@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use dosamigos\ckeditor\CKEditor;
+use admin\models\State;
+use admin\models\Country;
 use admin\models\User;
 use admin\models\BusinessDirectory;
 /* @var $this yii\web\View */
@@ -22,8 +24,8 @@ use admin\models\BusinessDirectory;
                 <?= $form->field($model, 'business_name')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'advertisername')->textInput(['maxlength' => true]) ?>
                 <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
-                <?php $countries = BusinessDirectory::getCountries();?>
-				<?php $states = BusinessDirectory::getStates();?>
+                <?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
+				<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
 				<?= $form->field($model, 'description')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
 				<?=Html::label('Banner Image')?>
 				<?php if($model->bannerimg!=''){?>
@@ -36,8 +38,8 @@ use admin\models\BusinessDirectory;
 				<?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 				
 				<?=Html::label('Location')?>
-				<?= $form->field($model, 'countryId')->dropDownList($countries, ['prompt' => 'Select Country'])->label('Country') ?>
-				<?= $form->field($model, 'stateId')->dropDownList($states, ['prompt' => 'Select State'])->label('State') ?>
+				<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
+				<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
 				<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'otherinfo')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'textlink')->textInput(['maxlength' => true]) ?>
