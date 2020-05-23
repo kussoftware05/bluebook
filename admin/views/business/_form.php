@@ -3,7 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+<<<<<<< HEAD
 use dosamigos\ckeditor\CKEditor;
+=======
+>>>>>>> 1389c1b0c13cb80f2b7c6b5a8a2c836f1b4be705
 use admin\models\User;
 /* @var $this yii\web\View */
 /* @var $model admin\models\Blog */
@@ -21,12 +24,17 @@ use admin\models\User;
                 <?= $form->field($model, 'business_name')->textInput(['maxlength' => true]) ?>
                 
                 <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
+<<<<<<< HEAD
                 
 				<?= $form->field($model, 'description')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
 				<?=Html::label('Banner Image')?>
 				<?php if($model->bannerimg!=''){?>
 				<div><img src="<?= Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg ?>" height="150" width="200"/></div>
 				<?php } ?>
+=======
+                <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+				<?=Html::label('Banner Image')?>
+>>>>>>> 1389c1b0c13cb80f2b7c6b5a8a2c836f1b4be705
 				<?= $form->field($model, 'bannerimg')->fileInput(['accept' => 'image/*'])->label(false); ?>
 				<?= $form->field($model, 'duration')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>

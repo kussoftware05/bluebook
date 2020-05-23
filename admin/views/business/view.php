@@ -24,8 +24,13 @@ $img_src = Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg;
         ]) ?>
     </p>
 
+<<<<<<< HEAD:admin/views/business/view.php
     
     <img src="<?= $img_src  ?>" width="250" height="200">
+=======
+    <h1><?= Html::encode($this->title) ?></h1>
+    <img src="<? //= $img_src ?>" width="250" height="200">
+>>>>>>> 1389c1b0c13cb80f2b7c6b5a8a2c836f1b4be705:admin/views/blog/view.php
 
     <?= DetailView::widget([
         'model' => $model,
