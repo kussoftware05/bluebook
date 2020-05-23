@@ -3,31 +3,39 @@
 namespace admin\models;
 
 use Yii;
+use admin\models\interfaces\ImageInterface;
+//use admin\models\BlogCategory;
+//use admin\models\Image;
 
 /**
- * This is the model class for table "business".
+ * This is the model class for table "blog".
  *
  * @property int $id
- * @property string $name
- * @property string|null $about
- * @property string|null $phone
- * @property string|null $website
- * @property string|null $address_line_1
- * @property string|null $address_line_2
+ * @property string $business_name
+ * @property string|null $description
+ * @property string|null $bannerimg
+ * @property string|null $email
+ * @property string|null $contactno
  * @property string|null $city
- * @property string|null $state
- * @property string|null $zip
+ * @property string|null $otherinfo
+ * @property int|null $countryId
+ * @property int|null $stateId
  *
- * @property BusinessHours[] $businessHours
+ * @property BlogCategory $cat
  */
-class Business extends \yii\db\ActiveRecord
+class BusinessDirectory extends \yii\db\ActiveRecord implements ImageInterface
 {
+    /**
+     * @var $TYPE
+     */
+    //public const TYPE = 'BLOG';
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'business';
+        return 'business_directory';
     }
 
     /**
@@ -36,11 +44,13 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['about'], 'string'],
-            [['name', 'website', 'address_line_1', 'address_line_2', 'city', 'state'], 'string', 'max' => 255],
-            [['phone'], 'string', 'max' => 15],
-            [['zip'], 'string', 'max' => 6],
+            [['business_name'], 'required'],
+            [['description', 'bannerimg','email','contactno','otherinfo'], 'string'],
+            //[['published_at', 'updated_at'], 'safe'],
+            [['countryId', 'stateId'], 'integer'],
+            //[['business_name', 'short_desp', 'author'], 'string', 'max' => 255],
+            [['business_name'], 'unique'],
+            //[['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => BlogCategory::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];
     }
 
@@ -51,25 +61,134 @@ class Business extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'about' => 'About',
-            'phone' => 'Phone',
-            'website' => 'Website',
-            'address_line_1' => 'Address Line 1',
-            'address_line_2' => 'Address Line 2',
+            'business_name' => 'Business Name',
+            'description' => 'Description',
+            'banner_img' => 'Banner Image',
+            'email' => 'Email',
+            'contactno' => 'Contact Number',
+            'countryId' => 'Country',
+            'stateId' => 'State',
             'city' => 'City',
-            'state' => 'State',
-            'zip' => 'Zip',
+            'otherinfo' => 'Other Info',
         ];
     }
 
     /**
-     * Gets query for [[BusinessHours]].
+     * Gets query for [[Cat]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getBusinessHours()
+    public function getCat()
     {
-        return $this->hasMany(BusinessHours::className(), ['business_id' => 'id']);
+        return $this->hasOne(BlogCategory::className(), ['id' => 'cat_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) 
+        {
+            if (!$this->isNewRecord)
+                $this->updated_at = date("Y-m-d H:i:s"); 
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * create a new business directory
+     * @param array $data
+     * @param array $image
+     * @return bool
+     */
+    public function createNewDirectory($data=[], $file=[])
+    {
+        if(empty($data)) 
+            return;
+        if($this->load($data)) 
+        {
+            $this->insert();
+           /* if($file['name'] != '') 
+            {
+                $image = new Image;
+                $image_upload_id = $image->createOrUploadAnImage(null,self::TYPE, $file,self::uploadImagePath());
+                if($image_upload_id !== false) 
+                {
+                    $current_model = self::findOne($this->id);
+                    $current_model->image_id = (int)$image_upload_id;
+                    return $current_model->save();
+                }
+            }*/
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * update a blog
+     * @param int $id
+     * @param array $data
+     * @param array $file
+     * @return bool
+     */
+    public function updateBlog($id, $data, $file) 
+    {
+        $blog = self::findOne($id);
+        if($blog->load($data)) 
+            $blog->save();
+        if(isset($file['name']) && !empty($file['name'])) 
+        {
+            $image = new Image;
+            $image->createOrUploadAnImage($blog->image_id, self::TYPE, $file,self::uploadImagePath());
+        }
+        return true;
+    }
+
+    public static function deleteBlog($id) 
+    {
+        if(empty($id)) 
+            return false;
+        $blog = self::findOne($id);
+        if($blog)
+        {
+            Image::deleteAnImage($blog->image_id,self::uploadImagePath());
+            $blog->delete();
+            return true;
+        } 
+        else 
+            return false;
+
+    }
+
+    /**
+     * get blog image
+     * @param int $id
+     * @return string 
+     */
+    public static function getBlogImage($id) 
+    {
+        $blog = self::findOne($id);
+        if(is_null($blog)) 
+            return '';
+        return Image::getImageNameById($blog->image_id);
+    }
+
+    /**
+     * return image full path 
+     * @param int $id
+     * @return string
+     */
+    public static function getBlogImageWithPath($id) 
+    {
+        $image = self::getBlogImage($id);
+        return  '/uploads/' . strtolower(self::TYPE) . '/' . $image;
+    }
+
+    /**
+     * return blog image path
+     * @return string
+     */
+    public static function uploadImagePath()
+    {
+        return Yii::getAlias('@webroot') . '/uploads/' . strtolower(self::TYPE);
     }
 }

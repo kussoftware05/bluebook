@@ -105,6 +105,25 @@ if(!empty($changepassword))
                             ]
                         ]
                     ],
+					[
+                        'label' => 'Bus Directory Management',
+                        'icon' => 'fa fa-list-alt',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Create',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/business/create'],
+                                //'active' => $this->context->route == 'master1/index'
+                            ],
+                            [
+                                'label' => 'Business Directory List',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/business/index'],
+                                //'active' => $this->context->route == 'master2/index'
+                            ]
+                        ]
+                    ],
                     [
                         'label' => 'Pages',
                         'icon' => 'fa fa-folder',
