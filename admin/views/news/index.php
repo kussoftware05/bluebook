@@ -40,17 +40,22 @@ $user= User::find()->all();
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            //'id',
             'title',
-            'content:html',
-            'newstype',
-			'published_at',
+			[
+			  'attribute' => 'content',
+			  'format' => 'html',
+			   'headerOptions' => ['style' => 'width:5%'],
+			],
+			[
+			  'attribute' => 'newstype',
+			   'headerOptions' => ['style' => 'width:10%'],
+			],
+			'published_at:datetime',
 			[
 				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
 				'label' => 'User',
 				'value' => function ($data) {
-				   return $data->user ? $data->user->first_name : '';;
+				   return $data->user ? $data->user->first_name : '';
 				},
 			],
             [
@@ -61,7 +66,10 @@ $user= User::find()->all();
                 },
 				'filter'=> ['Y'=>'Active','N'=>'Non-Active', 'P' => 'Pending'],
 			],
-			'mediatype',
+			[
+			  'attribute' => 'mediatype',
+			   'headerOptions' => ['style' => 'width:10%'],
+			],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

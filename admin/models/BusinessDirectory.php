@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $business_name
- * @property string|null $advertisername
+ * @property string|null $small_banner_image
  * @property string|null $description
  * @property string|null $bannerimg
  * @property string|null $email
@@ -43,7 +43,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
     {
         return [
             [['business_name'], 'required'],
-            [['description', 'advertisername','bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'string'],
+            [['description', 'small_banner_image','bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'string'],
             [['countryId', 'stateId','contactno','duration'], 'integer'],
 			[['city'],'safe'],
             [['business_name'], 'unique'],
@@ -57,10 +57,10 @@ class BusinessDirectory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-			'advertisername' => 'Advertiser Name',
+			'small_banner_image' => 'Small Banner Image',
             'business_name' => 'Business Name',
             'description' => 'Description',
-            'banner_img' => 'Banner Image',
+            'banner_img' => 'Big Banner Image',
             'email' => 'Email',
             'contactno' => 'Contact Number',
             'countryId' => 'Country',

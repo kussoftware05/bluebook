@@ -21,7 +21,9 @@ return [
         ],
         'user' => [
             'identityClass' => 'admin\models\User',
-            'enableAutoLogin' => true,
+            //'enableAutoLogin' => true,
+			'enableAutoLogin' => false,
+			'authTimeout' => 300,
             'identityCookie' => ['name' => '_identity-admin', 'httpOnly' => true],
         ],
         'session' => [

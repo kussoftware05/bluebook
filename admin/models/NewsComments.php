@@ -11,6 +11,9 @@ use Yii;
  * @property int $newsId
  * @property int $userId
  * @property string $comments
+ * @property string|null $postedon
+ * @property string $status
+ * @property string|null $ip_address
  */
 class NewsComments extends \yii\db\ActiveRecord
 {
@@ -30,7 +33,7 @@ class NewsComments extends \yii\db\ActiveRecord
         return [
             [['newsId', 'userId', 'comments'], 'required'],
             [['newsId', 'userId'], 'integer'],
-            [['comments'], 'string'],
+            [['comments', 'postedon', 'ip_address', 'status'], 'string'],
         ];
     }
 

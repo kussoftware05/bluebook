@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer text-center">
-					<a href="<?= Url::to(['add/index']) ?>" class="uppercase">View All News</a>
+					<a href="<?= Url::to(['news/index']) ?>" class="uppercase">View All News</a>
 				</div>
 				<!-- /.box-footer -->
 			</div>
