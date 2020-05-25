@@ -25,9 +25,12 @@ use yii\web\IdentityInterface;
  * @property string $created_at
  * @property string $updated_at
  * @property string $usertype
- * @property integer $subscription_id
  * @property integer $total_posts
  * @property string $access_token
+ * @property string|null $address
+ * @property string|null $city
+ * @property int|null $countryId
+ * @property int|null $stateId
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -52,12 +55,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username','first_name', 'last_name', 'gender', 'password_hash', 'email'], 'required'],
-            [['gender', 'status', 'usertype'], 'string'],
+            [['gender', 'status', 'usertype', 'address', 'city'], 'string'],
             [['created_at', 'updated_at',  'user_pic', 'auth_key' ], 'safe'],
             [['username', 'first_name', 'last_name', 'user_pic', 'password_hash', 'confirm_password', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 40],
             [['bio'], 'string'],
+			[['stateId', 'countryId'], 'integer'],
             [['username'], 'unique'],
             [['email'], 'unique'],
             ['email', 'email'],
@@ -89,7 +93,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'usertype' => 'User Type',
-            'access_token' => 'Access Token',
+            'access_token' => 'Access Token',		
+            'countryId' => 'Country',
+			'address' => 'Address',
+            'stateId' => 'State',
+            'city' => 'City',
         ];
     }
 

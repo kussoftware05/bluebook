@@ -68,6 +68,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
 			'address1' => 'Address',
             'stateId' => 'State',
             'city' => 'City',
+			'ownercontact' => 'Owner Contact',
             'otherinfo' => 'Other Info',
         ];
     }

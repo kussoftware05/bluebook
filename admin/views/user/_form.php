@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
+use yii\helpers\ArrayHelper;
+use admin\models\State;
+use admin\models\Country;
 
 /* @var $this yii\web\View */
 /* @var $model admin\models\User */
@@ -50,8 +53,14 @@ $this->registerCssFile("/bluebook/admin/css/admin.css");
 
         <div class="login_inf col-md-6 box box-success sereg">
             <h3>Contact Details</h3>
+			<?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
+			<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
+			<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
+			<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 

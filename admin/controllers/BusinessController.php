@@ -25,12 +25,17 @@ class BusinessController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'index', 'delete'],
+                'only' => ['create', 'update', 'index', 'delete', 'userdetails'],
                 'rules' => [
                     // allow authenticated users
                     [
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+					[
+                        'actions' => ['userdetails'],
+                        'allow' => true,
+                        'roles' => ['*'],
                     ],
                 ],
             ],
@@ -88,6 +93,12 @@ class BusinessController extends Controller
    				$image->saveAs(Yii::getAlias('@webroot/images/bannerImage/').'/'.$image->name);	
 			    $model->bannerimg = $image->name;
 			}
+			$smallBannerimage= UploadedFile::getInstance($model,'small_banner_image');
+			if(isset($smallBannerimage -> tempName) && in_array($smallBannerimage->extension, array('jpg','png','gif')))
+			{
+   				$smallBannerimage->saveAs(Yii::getAlias('@webroot/images/smallBannerImage/').'/'.$smallBannerimage->name);	
+			    $model->small_banner_image = $smallBannerimage->name;
+			}
 			if($model->save())
 			{
 				Yii::$app->session->setFlash('success', "Business Directory Created Successfully");	
@@ -116,6 +127,8 @@ class BusinessController extends Controller
         $model = $this->findModel($id);
         $filename = $model->bannerimg;
 		$model->bannerimg = $filename;
+		$filename2 = $model->small_banner_image;
+		$model->small_banner_image = $filename2;
         if ($model->load(Yii::$app->request->post())) 
 		{
 			$image = UploadedFile::getInstance($model,'bannerimg');
@@ -130,6 +143,19 @@ class BusinessController extends Controller
 			else
 			{
 					$model->bannerimg = $filename;
+			}
+			$smallBannerimage= UploadedFile::getInstance($model,'small_banner_image');
+			if(isset($smallBannerimage))
+			{
+				if(isset($smallBannerimage -> tempName) && in_array($smallBannerimage->extension, array('jpg','png','gif')))
+				{
+					$smallBannerimage->saveAs(Yii::getAlias('@webroot/images/smallBannerImage/').'/'.$smallBannerimage->name);	
+					$model->small_banner_image = $smallBannerimage->name;
+				}
+			}
+			else
+			{
+					$model->small_banner_image = $filename2;
 			}
 			if($model->save())
 			{
@@ -176,5 +202,9 @@ class BusinessController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	public function actionUserdetails($username)
+    {
+		echo $username;
     }
 }

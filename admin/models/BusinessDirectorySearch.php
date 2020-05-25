@@ -18,7 +18,7 @@ class BusinessDirectorySearch extends BusinessDirectory
     {
         return [
             [['id'], 'integer'],
-			[['advertisername','description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'safe'],
+			[['description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'safe'],
         ];
     }
 
@@ -62,7 +62,6 @@ class BusinessDirectorySearch extends BusinessDirectory
         ]);
 
         $query->andFilterWhere(['like', 'business_name', $this->business_name])
-			->andFilterWhere(['like', 'advertisername', $this->advertisername])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'contactno', $this->contactno])

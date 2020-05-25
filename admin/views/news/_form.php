@@ -7,6 +7,8 @@ use dosamigos\ckeditor\CKEditor;
 use dosamigos\datepicker\DatePicker;
 use admin\models\Category;
 use admin\models\User;
+use admin\models\State;
+use admin\models\Country;
 /* @var $this yii\web\View */
 /* @var $model admin\models\News */
 /* @var $form yii\widgets\ActiveForm */
@@ -47,8 +49,15 @@ use admin\models\User;
 ?>
 
     <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
+	<?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
+	<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
 
     <?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
+	
+	<?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+	<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
+	<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
+	<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 
 	<?php /*echo $form->field($model, 'published_at')->widget(
 		DatePicker::className(), [

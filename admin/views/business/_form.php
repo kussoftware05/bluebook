@@ -11,6 +11,8 @@ use admin\models\BusinessDirectory;
 /* @var $this yii\web\View */
 /* @var $model admin\models\Blog */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/business.js',['depends' => [\yii\web\JqueryAsset::className()]]); 
 ?>
 
 <div class="blog-form">
@@ -22,7 +24,6 @@ use admin\models\BusinessDirectory;
             <div class="col-sm-9 col-md-9">
 
                 <?= $form->field($model, 'business_name')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'advertisername')->textInput(['maxlength' => true]) ?>
                 <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
                 <?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
 				<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
@@ -32,10 +33,15 @@ use admin\models\BusinessDirectory;
 				<div><img src="<?= Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg ?>" height="150" width="200"/></div>
 				<?php } ?>
 				<?= $form->field($model, 'bannerimg')->fileInput(['accept' => 'image/*'])->label(false); ?>
-				<?= $form->field($model, 'duration')->textInput(['maxlength' => true]) ?>
+				<?=Html::label('Small Banner Image')?>
+				<?php if($model->small_banner_image!=''){?>
+				<div><img src="<?= Yii::$app->request->baseUrl.'/images/smallBannerImage/'.$model->small_banner_image ?>" height="150" width="200"/></div>
+				<?php } ?>
+				<?= $form->field($model, 'small_banner_image')->fileInput(['accept' => 'image/*'])->label(false); ?>
+				<?= $form->field($model, 'duration')->textInput(['maxlength' => true]) ?>				
+				<?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 				<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'contactno')->textInput(['maxlength' => true])->label('Contact') ?>
-				<?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 				
 				<?=Html::label('Location')?>
 				<?= $form->field($model, 'address1')->textInput(['maxlength' => true]) ?>

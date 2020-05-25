@@ -22,6 +22,10 @@ use Yii;
  * @property string|null $newstype
  * @property int $totallike
  * @property int $totaldislike
+ * @property string|null $address
+ * @property string|null $city
+ * @property int|null $countryId
+ * @property int|null $stateId
  *
  * @property Category $cat
  * @property Image $image
@@ -43,9 +47,9 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['content', 'status'], 'string'],
+            [['content', 'status', 'address', 'city'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
-            [['cat_id','userId', 'totallike', 'totaldislike'], 'integer'],
+            [['cat_id','userId', 'totallike', 'totaldislike', 'stateId', 'countryId'], 'integer'],
             [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
@@ -72,7 +76,11 @@ class News extends \yii\db\ActiveRecord
 			'mediatype' => 'Media Type',
 			'newstype' => 'News Type',
 			'totallike' => 'Total Like',
-			'totaldislike' => 'Total Dislike',
+			'totaldislike' => 'Total Dislike',	
+            'countryId' => 'Country',
+			'address' => 'Address',
+            'stateId' => 'State',
+            'city' => 'City',
         ];
     }
 
