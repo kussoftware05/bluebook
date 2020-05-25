@@ -18,24 +18,52 @@ use admin\models\User;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-	<?= $form->field($model, 'content')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic'])->label('Description') ?>
+	<?php //echo $form->field($model, 'content')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic'])->label('Description') ?>
+
+	<?= $form->field($model, 'content')
+         ->widget(CKEditor::className(), 
+            [
+              'options' => [], 
+              'preset' => 'advanced',
+              'clientOptions' => [
+                  'extraPlugins' => '',
+                  'height' => 500,
+
+                  //Here you give the action who will handle the image upload 
+                  'filebrowserUploadUrl' => '/site/ckeditor_image_upload',
+
+                  'toolbarGroups' => [
+                      ['name' => 'undo'],
+                      ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                      ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi' ]],
+                      ['name' => 'styles'],
+                      ['name' => 'links', 'groups' => ['links', 'insert']]
+                  ]
+
+              ]
+
+            ]) 
+
+?>
 
     <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
 
     <?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 
-	<?= $form->field($model, 'published_at')->widget(
-    DatePicker::className(), [
-        // inline too, not bad
-         'inline' => true, 
-         // modify template for custom rendering
-        'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-        'clientOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd'
-        ]
-]);?>
-
+	<?php /*echo $form->field($model, 'published_at')->widget(
+		DatePicker::className(), [
+			// inline too, not bad
+			 'inline' => true, 
+			 // modify template for custom rendering
+			'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+			'clientOptions' => [
+				//'defaultDate' => date('Y-m-d'),
+				'autoclose' => true,
+				'todayHighlight' => true,
+				'format' => 'yyyy-mm-dd'
+			]
+	]);*/?>
+	
     <?php //echo $form->field($model, 'updated_at')->textInput() ?>
 
      <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', 'P'=> 'Pending' ]) ?>

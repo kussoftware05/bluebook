@@ -20,6 +20,8 @@ use Yii;
  * @property string|null $news_image
  * @property string|null $mediatype
  * @property string|null $newstype
+ * @property int $totallike
+ * @property int $totaldislike
  *
  * @property Category $cat
  * @property Image $image
@@ -43,7 +45,7 @@ class News extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['content', 'status'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
-            [['cat_id','userId'], 'integer'],
+            [['cat_id','userId', 'totallike', 'totaldislike'], 'integer'],
             [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
@@ -69,6 +71,8 @@ class News extends \yii\db\ActiveRecord
             'news_image' => 'Image',
 			'mediatype' => 'Media Type',
 			'newstype' => 'News Type',
+			'totallike' => 'Total Like',
+			'totaldislike' => 'Total Dislike',
         ];
     }
 

@@ -106,7 +106,7 @@ if(!empty($changepassword))
                         ]
                     ],
 					[
-                        'label' => 'Bus Directory Management',
+                        'label' => 'Business Directory',
                         'icon' => 'fa fa-list-alt',
                         'url' => '#',
                         'items' => [
