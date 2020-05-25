@@ -26,7 +26,7 @@ use admin\models\BusinessDirectory;
                 <?php $user = User::find()->all();$listData = ArrayHelper::map($user,'id','first_name');?>
                 <?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
 				<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
-				<?= $form->field($model, 'description')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
+				<?= $form->field($model, 'description')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'advanced']) ?>
 				<?=Html::label('Banner Image')?>
 				<?php if($model->bannerimg!=''){?>
 				<div><img src="<?= Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg ?>" height="150" width="200"/></div>
@@ -38,6 +38,7 @@ use admin\models\BusinessDirectory;
 				<?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 				
 				<?=Html::label('Location')?>
+				<?= $form->field($model, 'address1')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
 				<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
 				<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
