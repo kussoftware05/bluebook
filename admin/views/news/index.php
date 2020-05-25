@@ -48,7 +48,7 @@ $user= User::find()->all();
 			  'attribute' => 'newstype',
 			   'headerOptions' => ['style' => 'width:10%'],
 			],
-			'published_at:datetime',
+			'published_at:date',
 			[
 				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
 				'label' => 'User',

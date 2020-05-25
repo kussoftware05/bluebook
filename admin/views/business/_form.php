@@ -28,16 +28,16 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/business.js',['depends' =
                 <?php $countries = Country::find()->all();$countryData = ArrayHelper::map($countries,'id','name');?>
 				<?php $states = State::find()->all();$stateData = ArrayHelper::map($states,'id','name');?>
 				<?= $form->field($model, 'description')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'advanced']) ?>
-				<?=Html::label('Banner Image')?>
+				
 				<?php if($model->bannerimg!=''){?>
 				<div><img src="<?= Yii::$app->request->baseUrl.'/images/bannerImage/'.$model->bannerimg ?>" height="150" width="200"/></div>
 				<?php } ?>
-				<?= $form->field($model, 'bannerimg')->fileInput(['accept' => 'image/*'])->label(false); ?>
-				<?=Html::label('Small Banner Image')?>
+				<?= $form->field($model, 'bannerimg')->fileInput(['accept' => 'image/*']) ?>
+				
 				<?php if($model->small_banner_image!=''){?>
 				<div><img src="<?= Yii::$app->request->baseUrl.'/images/smallBannerImage/'.$model->small_banner_image ?>" height="150" width="200"/></div>
 				<?php } ?>
-				<?= $form->field($model, 'small_banner_image')->fileInput(['accept' => 'image/*'])->label(false); ?>
+				<?= $form->field($model, 'small_banner_image')->fileInput(['accept' => 'image/*'])?>
 				<?= $form->field($model, 'duration')->textInput(['maxlength' => true]) ?>				
 				<?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 				<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>

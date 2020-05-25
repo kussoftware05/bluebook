@@ -61,7 +61,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
 			'small_banner_image' => 'Small Banner Image',
             'business_name' => 'Business Name',
             'description' => 'Description',
-            'banner_img' => 'Big Banner Image',
+            'bannerimg' => 'Big Banner Image',
             'email' => 'Email',
             'contactno' => 'Contact Number',
             'countryId' => 'Country',

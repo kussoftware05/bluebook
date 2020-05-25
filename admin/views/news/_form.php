@@ -59,7 +59,7 @@ use admin\models\Country;
 	<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
 	<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 
-	<?php /*echo $form->field($model, 'published_at')->widget(
+	<?php echo $form->field($model, 'published_at')->widget(
 		DatePicker::className(), [
 			// inline too, not bad
 			 'inline' => true, 
@@ -71,7 +71,7 @@ use admin\models\Country;
 				'todayHighlight' => true,
 				'format' => 'yyyy-mm-dd'
 			]
-	]);*/?>
+	]);?>
 	
     <?php //echo $form->field($model, 'updated_at')->textInput() ?>
 

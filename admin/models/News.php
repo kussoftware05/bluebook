@@ -64,7 +64,7 @@ class News extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'content' => 'Content',
+            'content' => 'Description',
             'short_desp' => 'Short Description',
             'author' => 'Author',
 			'userId' => 'User',
