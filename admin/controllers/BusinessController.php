@@ -205,6 +205,7 @@ class BusinessController extends Controller
     }
 	public function actionUserdetails($username)
     {
-		echo $username;
+		$data =  BusinessDirectory::getUserDetails($username);
+		return $data;
     }
 }

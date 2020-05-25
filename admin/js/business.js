@@ -11,7 +11,7 @@ $(function() {
 			data:{username:username},
 
 			success: function(data){
-
+				//alert(data); // apple
 			$("#limite").html(data);
 
 			},

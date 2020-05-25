@@ -63,6 +63,7 @@ use admin\models\Country;
 		DatePicker::className(), [
 			// inline too, not bad
 			 'inline' => true, 
+			 'value' => $model->published_at != NULL ? date('d-m-Y', strtotime($model->published_at)) : NULL,
 			 // modify template for custom rendering
 			'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
 			'clientOptions' => [

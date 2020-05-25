@@ -72,5 +72,10 @@ class BusinessDirectory extends \yii\db\ActiveRecord
             'otherinfo' => 'Other Info',
         ];
     }
-	
+	public static function getUserDetails($username)
+    {
+		$user = User::Find()
+		->where(['username' => $username]);
+		return $user;
+	}
 }
