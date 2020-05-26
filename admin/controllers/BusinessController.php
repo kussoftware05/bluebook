@@ -5,7 +5,7 @@ namespace admin\controllers;
 use Yii;
 use admin\models\BusinessDirectory;
 use admin\models\BusinessDirectorySearch;
-
+use admin\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -203,9 +203,28 @@ class BusinessController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-	public function actionUserdetails($username)
+	public function actionUserdetails($userId)
     {
-		$data =  BusinessDirectory::getUserDetails($username);
-		return $data;
+		//$data =  BusinessDirectory::getUserDetails($username);
+		if (Yii::$app->request->isAjax) 
+		{
+			$userId =  Yii::$app->request->get('userId');
+			$data = User::find()->select(['address','countryId','stateId', 'city'])->where(['id' => $userId])->one();
+			//$search = "some-string";
+            $code = 20;
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			$response = Yii::$app->response;
+			$response->format = \yii\web\Response::FORMAT_JSON;
+			$response->data = ['data' => $data];
+            /*return [
+                //'search' => $search,
+                'code' => $code,
+            ];*/
+			return $response;
+		}
+		else
+		{
+			return false;
+		}
     }
 }

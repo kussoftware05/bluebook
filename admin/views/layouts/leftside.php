@@ -106,6 +106,23 @@ if(!empty($changepassword))
                         ]
                     ],
 					[
+                        'label' => 'News Comments',
+                        'icon' => 'fa fa-list-alt',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Create',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/news-comments/create'],
+                            ],
+                            [
+                                'label' => 'News List',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/news-comments/index'],
+                            ]
+                        ]
+                    ],
+					[
                         'label' => 'Business Directory',
                         'icon' => 'fa fa-list-alt',
                         'url' => '#',

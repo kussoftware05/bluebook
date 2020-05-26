@@ -88,4 +88,8 @@ class News extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
+	public function getComments()
+    {
+        return $this->hasOne(NewsComments::className(), ['newsId' => 'id']);
+    }
 }

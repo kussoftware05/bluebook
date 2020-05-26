@@ -17,7 +17,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/business.js',['depends' =
 
 <div class="blog-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' => [
+	'enctype' => 'multipart/form-data',	
+	'validateOnChange'=>true,
+	'id' => 'form-business',
+    'enableAjaxValidation' => true,
+                    'enableClientValidation' => true,
+	]]); ?>
 
     <div class="container">
         <div class="row">

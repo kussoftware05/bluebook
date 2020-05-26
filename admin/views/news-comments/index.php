@@ -28,7 +28,7 @@ $user= User::find()->all();
 	<?php endif ?>
 	
     <p>
-        <?= Html::a('Create News', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create News Comments', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -38,17 +38,16 @@ $user= User::find()->all();
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'title',
 			[
-			  'attribute' => 'content',
+			  'attribute' => 'comments',
 			  'format' => 'html',
-			   'headerOptions' => ['style' => 'width:5%'],
+			   'headerOptions' => ['style' => 'width:25%'],
 			],
 			[
-			  'attribute' => 'newstype',
+			  'attribute' => 'postedon',
+			  'format' => 'date',
 			   'headerOptions' => ['style' => 'width:10%'],
 			],
-			'published_at:date',
 			[
 				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
 				'label' => 'User',
@@ -60,25 +59,9 @@ $user= User::find()->all();
 				'attribute' => 'Status',
 				'format' => 'raw',
 				'value' =>  function ($model) {
-                    return ($model ->status == 'Y') ? '<span class="label label-success">Active</span>' : (($model ->status == 'N')? '<span class="label label-danger">In-Active</span>' : '<span class="label label-warning">Pending</span>');
+                    return ($model ->status == 'Y') ? '<span class="label label-success">Published</span>' : '<span class="label label-danger">Not-Published</span>';
                 },
 				'filter'=> ['Y'=>'Active','N'=>'Non-Active', 'P' => 'Pending'],
-			],
-			[
-			  'attribute' => 'mediatype',
-			   'headerOptions' => ['style' => 'width:10%'],
-			],
-			[
-				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
-				'label' => 'Comments',
-				'format' => 'raw',
-			   'headerOptions' => ['style' => 'width:10%'],
-				/*'value' => function ($data) {
-				   return $data->comments ? $data->comments->comments : '';
-				},*/
-				'value' => function ($model) {
-					return Html::a('Click_here',['news-comments/comments-list', 'id' => $model -> id],['target'=>'_blank']);
-				},
 			],
             ['class' => 'yii\grid\ActionColumn'],
         ],

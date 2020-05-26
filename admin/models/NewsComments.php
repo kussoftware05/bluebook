@@ -47,6 +47,11 @@ class NewsComments extends \yii\db\ActiveRecord
             'newsId' => 'News ID',
             'userId' => 'User ID',
             'comments' => 'Comments',
+			'postedon' => 'Post Date',
         ];
+    }
+	public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 }

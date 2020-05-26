@@ -74,8 +74,12 @@ class BusinessDirectory extends \yii\db\ActiveRecord
     }
 	public static function getUserDetails($username)
     {
-		$user = User::Find()
-		->where(['username' => $username]);
-		return $user;
+		//echo $username;
+		
+		
+		$model = User::find()->select(['address','countryId','stateId', 'city'])->where(['username' => $username])->one();
+		
+		//print_r($model);die;
+		return $model;
 	}
 }
