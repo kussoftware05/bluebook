@@ -29,6 +29,8 @@ $user= User::find()->all();
 	<?php endif ?>
 	
     <p>
+		<?= Html::a('Back', ['/news/index'], ['class'=>'btn btn-primary grid-button', 'style' => 'float: right;']) ?>
+		<br>
 		<?= Html::tag('p', Html::encode('Comments List'), ['class' => 'btn btn-success']) ?>
     </p>
 

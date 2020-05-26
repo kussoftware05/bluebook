@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use admin\models\User;
+use admin\models\NewsComments;
 /* @var $this yii\web\View */
 /* @var $searchModel admin\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -77,7 +78,18 @@ $user= User::find()->all();
 				   return $data->comments ? $data->comments->comments : '';
 				},*/
 				'value' => function ($model) {
-					return Html::a('Click_here',['news-comments/comments-list', 'id' => $model -> id],['target'=>'_blank']);
+					$exists = NewsComments::find()
+					->where( [ 'id' => $model -> id] )
+					->exists(); 
+					if($exists)
+					{
+						return Html::a('Show Comments',['news-comments/comments-list', 'id' =>  $model -> id],['target'=>'_blank']);
+					}
+					else
+					{
+						return '<span class="label label-danger">Comments not found</span>';
+					}
+					
 				},
 			],
             ['class' => 'yii\grid\ActionColumn'],
