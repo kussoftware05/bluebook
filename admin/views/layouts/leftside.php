@@ -105,7 +105,7 @@ if(!empty($changepassword))
                             ]
                         ]
                     ],
-					[
+					/*[
                         'label' => 'News Comments',
                         'icon' => 'fa fa-list-alt',
                         'url' => '#',
@@ -121,7 +121,7 @@ if(!empty($changepassword))
                                 'url' => ['/news-comments/index'],
                             ]
                         ]
-                    ],
+                    ],*/
 					[
                         'label' => 'Business Directory',
                         'icon' => 'fa fa-list-alt',

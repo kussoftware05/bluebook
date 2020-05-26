@@ -63,7 +63,6 @@ use admin\models\Country;
 		DatePicker::className(), [
 			// inline too, not bad
 			 'inline' => true, 
-			 'value' => $model->published_at != NULL ? date('d-m-Y', strtotime($model->published_at)) : NULL,
 			 // modify template for custom rendering
 			'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
 			'clientOptions' => [
@@ -83,7 +82,7 @@ use admin\models\Country;
                         [ 'prompt'=>'Select a Category' ] 
                     )->label('Category')*/ ?>
 					
-	<?= $form->field($model, 'newstype')->dropDownList([ 'airtle' => 'Airtle', 'news' => 'News', 'story'=> 'Story' ]) ?>
+	<?= $form->field($model, 'newstype')->dropDownList([ 'article' => 'Article', 'news' => 'News', 'story'=> 'Story' ]) ?>
 	
 	<?= $form->field($model, 'mediatype')->dropDownList([ 'image' => 'Image', 'video' => 'Video', 'embVideo'=> 'Embeded Video' ]) ?>
 	

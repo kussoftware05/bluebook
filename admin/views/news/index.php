@@ -71,25 +71,11 @@ $user= User::find()->all();
 			],
 			[
 				'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
-				'label' => 'Comments',
+				'label' => 'Total No of Comments',
 				'format' => 'raw',
 			   'headerOptions' => ['style' => 'width:10%'],
-				/*'value' => function ($data) {
-				   return $data->comments ? $data->comments->comments : '';
-				},*/
-				'value' => function ($model) {
-					$exists = NewsComments::find()
-					->where( [ 'id' => $model -> id] )
-					->exists(); 
-					if($exists)
-					{
-						return Html::a('Show Comments',['news-comments/comments-list', 'id' =>  $model -> id],['target'=>'_blank']);
-					}
-					else
-					{
-						return '<span class="label label-danger">Comments not found</span>';
-					}
-					
+				'value' => function ($data) {
+					return Html::a($data->getTotalComments($data->id),['comments/view', 'id' =>  $data -> id]);
 				},
 			],
             ['class' => 'yii\grid\ActionColumn'],
