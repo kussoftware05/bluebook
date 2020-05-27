@@ -54,7 +54,7 @@ use admin\models\Country;
 
     <?= $form->field($model, 'userId')->dropDownList($listData, ['prompt' => 'Select User'])->label('User') ?>
 	
-	<?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+	<?php //echo $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 	<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
 	<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
 	<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>

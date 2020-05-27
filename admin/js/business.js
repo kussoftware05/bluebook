@@ -8,38 +8,25 @@ $(function() {
 			type: "GET",
 			
 			url: "userdetails",
-
+			
 			data:{userId:userId},
 			
-			dataType: 'json',
-			
-			success: function(response){
-				var myObj = $.parseJSON(response);
-				console.log(myObj.data);
-				var address = myObj.data;
-				var city = myObj.city;
-				var len = response.length;
-				//alert(len);
-			  /*if(len > 0){ //alert(len);
-			   var address = response[0]['address'];
-			   //console.log(address);
-			   var city = response[0]['city'];
-			   var countryId = response[0]['countryId'];
-			   var stateId = response[0]['stateId'];
-			   //var salary = response[0]['salary'];
-*/
+			success: function(response)
+			{
+				console.log(response.data);
+				var address = response.data['address'];
+				var city = response.data['city'];
+				var countryId = response.data['countryId'];
+				var stateId = response.data['stateId'];
+				
 			   // Set value to textboxes
 			   document.getElementById('businessdirectory-address1').value = address;
 			   document.getElementById('businessdirectory-city').value = city;
-			  // document.getElementById('age_'+businessdirectory-city).value = age;
-			   //document.getElementById('email_'+index).value = email;
-			   //document.getElementById('salary_'+index).value = salary;
-			  //}
-			$("#limite").html(response);
-
+			   $("#businessdirectory-countryid").val(countryId)
+			   $("#businessdirectory-stateid").val(stateId)		
 			},
 			error: function() {
-            alert('try again');
+				alert('Oops! No data');
 			}
 			});
     });

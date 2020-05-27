@@ -50,10 +50,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/business.js',['depends' =
 				<?= $form->field($model, 'contactno')->textInput(['maxlength' => true])->label('Contact') ?>
 				
 				<?=Html::label('Location')?>
-				<?= $form->field($model, 'address1')->textInput(['maxlength' => true]) ?>
-				<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country'])->label('Country') ?>
-				<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State'])->label('State') ?>
-				<?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'address1')->textInput(['maxlength' => true, 'readOnly'=> true]) ?>
+				<?= $form->field($model, 'countryId')->dropDownList($countryData, ['prompt' => 'Select Country','readOnly'=> true])->label('Country') ?>
+				<?= $form->field($model, 'stateId')->dropDownList($stateData, ['prompt' => 'Select State', 'readOnly'=> true])->label('State') ?>
+				<?= $form->field($model, 'city')->textInput(['maxlength' => true, 'readOnly'=> true]) ?>
 				<?= $form->field($model, 'otherinfo')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'textlink')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'weburl')->textInput(['maxlength' => true]) ?>

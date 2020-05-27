@@ -75,7 +75,12 @@ $user= User::find()->all();
 				'format' => 'raw',
 			   'headerOptions' => ['style' => 'width:10%'],
 				'value' => function ($data) {
+					if($data->getTotalComments($data->id) > 0){
 					return Html::a($data->getTotalComments($data->id),['comments/view', 'id' =>  $data -> id]);
+					}
+					else{
+						return '<span class="label label-primary">No Comments Found</span>';
+					}
 				},
 			],
             ['class' => 'yii\grid\ActionColumn'],
