@@ -209,18 +209,21 @@ class BusinessController extends Controller
 		if (Yii::$app->request->isAjax) 
 		{
 			$userId =  Yii::$app->request->get('userId');
-			$data = User::find()->select(['address','countryId','stateId', 'city'])->where(['id' => $userId])->one();
+			$user = User::find()->select(['address','countryId','stateId', 'city'])->where(['id' => $userId])->one();
 			//$search = "some-string";
             $code = 20;
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			$response = Yii::$app->response;
 			$response->format = \yii\web\Response::FORMAT_JSON;
-			$response->data = ['data' => $data];
+			//$response->data = $data;
+			$response->data = $user['address'];
+			//$response->city = $user['city'];
             /*return [
                 //'search' => $search,
                 'code' => $code,
             ];*/
-			return $response;
+			return json_encode($response);
+			//return $response;
 		}
 		else
 		{
