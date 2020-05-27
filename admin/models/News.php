@@ -83,13 +83,21 @@ class News extends \yii\db\ActiveRecord
             'city' => 'City',
         ];
     }
-
+	/*
+	* get User details
+	* return array
+	*/
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
-	public function getComments()
+	/*
+	* get total comments by newsId
+	* parameter $d int
+	* return int
+	*/
+	public function getTotalComments($id)
     {
-        return $this->hasOne(NewsComments::className(), ['newsId' => 'id']);
+		return NewsComments::find()->where(['newsId' => $id])->count();
     }
 }
