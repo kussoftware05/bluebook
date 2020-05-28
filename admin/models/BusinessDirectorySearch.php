@@ -18,7 +18,7 @@ class BusinessDirectorySearch extends BusinessDirectory
     {
         return [
             [['id'], 'integer'],
-			[['description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'safe'],
+			[['description', 'bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours','showbusinesstype'], 'safe'],
         ];
     }
 
@@ -69,8 +69,8 @@ class BusinessDirectorySearch extends BusinessDirectory
             ->andFilterWhere(['like', 'weburl', $this->weburl])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'duration', $this->duration])
-            ->andFilterWhere(['like', 'textlink', $this->textlink]);
-
+            ->andFilterWhere(['like', 'textlink', $this->textlink])
+			->andFilterWhere(['like', 'showbusinesstype', $this->showbusinesstype]);
         return $dataProvider;
     }
 }

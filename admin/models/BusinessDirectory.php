@@ -17,6 +17,7 @@ use Yii;
  * @property string|null $address1
  * @property string|null $city
  * @property string|null $otherinfo
+ * @property s|ringnull $showbusinesstype
  * @property int|null $countryId
  * @property int|null $stateId
  *
@@ -46,7 +47,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
             [['business_name'], 'required'],
             [['description', 'small_banner_image','bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'string'],
             [['countryId', 'stateId','contactno','duration'], 'integer'],
-			[['city','address1'],'safe'],
+			[['city','address1','showbusinesstype'],'safe'],
             [['business_name'], 'unique'],
         ];
     }
@@ -70,6 +71,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
             'city' => 'City',
 			'ownercontact' => 'Owner Contact',
             'otherinfo' => 'Other Info',
+			'showbusinesstype' => 'Show Business Type'
         ];
     }
 }
