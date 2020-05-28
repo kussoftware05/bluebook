@@ -20,6 +20,7 @@ use Yii;
  * @property s|ringnull $showbusinesstype
  * @property int|null $countryId
  * @property int|null $stateId
+ * @property int|null $showpriority
  *
  * 
  */
@@ -46,7 +47,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
         return [
             [['business_name'], 'required'],
             [['description', 'small_banner_image','bannerimg','email','duration','otherinfo','contactno','textlink','weburl','keywords','ownercontact','storehours'], 'string'],
-            [['countryId', 'stateId','contactno','duration'], 'integer'],
+            [['countryId', 'stateId','contactno','duration','showpriority'], 'integer'],
 			[['city','address1','showbusinesstype'],'safe'],
             [['business_name'], 'unique'],
         ];
@@ -71,6 +72,7 @@ class BusinessDirectory extends \yii\db\ActiveRecord
             'city' => 'City',
 			'ownercontact' => 'Owner Contact',
             'otherinfo' => 'Other Info',
+			'showpriority' => 'Show Priority',
 			'showbusinesstype' => 'Show Business Type'
         ];
     }
