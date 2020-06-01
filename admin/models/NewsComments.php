@@ -33,7 +33,7 @@ class NewsComments extends \yii\db\ActiveRecord
         return [
             [['newsId', 'userId', 'comments'], 'required'],
             [['newsId', 'userId'], 'integer'],
-            [['comments', 'postedon', 'ip_address', 'status'], 'string'],
+            [['comments', 'commentedon', 'ip_address', 'published'], 'string'],
         ];
     }
 
@@ -47,7 +47,8 @@ class NewsComments extends \yii\db\ActiveRecord
             'newsId' => 'News ID',
             'userId' => 'User ID',
             'comments' => 'Comments',
-			'postedon' => 'Post Date',
+			'commentedon' => 'Date of Comment',
+			'published' => 'Published'
         ];
     }
 	public function getUser()

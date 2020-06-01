@@ -12,6 +12,11 @@ $this->title = 'News Comments';
 $this->params['breadcrumbs'][] = $this->title;
 $user= User::find()->all();
 ?>
+<style>
+.comments-border{
+	border:1px #fff solid;
+}
+</style>
 <div class="news-index">
 
 	<?php if (Yii::$app->session->hasFlash('success')): ?>
@@ -27,34 +32,49 @@ $user= User::find()->all();
         <?= Yii::$app->session->getFlash('error') ?>
     </div>
 	<?php endif ?>
+	<div  class="grid-view">
+	<table class="table table-striped table-bordered">
+	<thead>
+	<tr><th>#</th>
+	<th>Comments</th>
+	<th>Commented By</th>
+	<th>Date of Comment</th>
+	<th></th>
+	</tr>
+	</thead>
+	<tbody>
 	<?php
 	foreach($model as $m)
 	{
 	?>
-	<div style="background-color: skyblue; padding: 5px 15px;margin-bottom:5px;width:600px;height:240px;">
-    <?=$m->comments;?> 
-	<div style="float:right;margin-top:30px;">By <?=$m->user->first_name?></div>
-	<div style="float:right;margin-top:30px;clear:both;"> <?=date('d-m-Y',strtotime($m->commentedon))?></div> 
-	<div style="margin-top:160px;">
-		<?php if($m->published)
+	<tr><td></td>
+	<td><?=$m->comments;?></td>
+	<td><?=$m->user->first_name?></td>
+	<td><?=date('d-m-Y',strtotime($m->commentedon))?></td>
+	<td>
+	
+	<?php if($m->published)
 		{	
 		?>
-		<?= Html::tag('p', Html::encode('Not Published'), ['class' => 'btn btn-success']) ?>
+		<?= Html::tag('p', Html::encode('Not Published'), ['class' => 'btn btn-primary']) ?>
 		<?php
 		}
 		else
 		{
 		?>
-		<?= Html::tag('p', Html::encode('Published'), ['class' => 'btn btn-success']) ?>
+		<?= Html::tag('p', Html::encode('Published'), ['class' => 'btn btn-primary']) ?>
 		<?php	
 		}
 		?>
-    </div>
+	</td>
 	
-	</div>
+	</tr>
 	<?php
 	}
 	?>
+	</tbody>
+	</table>
 	</div>
+	
 
 </div>

@@ -29,7 +29,23 @@ class CommentsController extends Controller
             ],
         ];
     }
-
+	/**
+     * Lists all Comments models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new NewsCommentsSearch();
+		//echo '<pre>';
+		$n['NewsCommentsSearch']['newsId'] = 1;
+		//print_r($n);die;
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider = $searchModel->search($n);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     
     /**
      * Displays comments by newsId.
@@ -44,6 +60,21 @@ class CommentsController extends Controller
             'model' => $model,
         ]);
     }
-
+	public function actionUpdate($id)
+    {
+        $model = NewsComments::findOne($id);
+		if ($model->load(Yii::$app->request->post()))
+		{
+			$model->save();
+            Yii::$app->session->setFlash('success', "Comment Published Successfully");	
+            return $this->redirect(['index']);
+		}
+		else
+		{
+			return $this->render('update', [
+				'model' => $model,
+			]);
+		}
+    }
 }
 

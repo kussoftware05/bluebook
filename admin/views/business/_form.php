@@ -60,7 +60,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/business.js',['depends' =
 				<?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'ownercontact')->textInput(['maxlength' => true]) ?>
 				<?= $form->field($model, 'storehours')->textInput(['maxlength' => true]) ?>
-				
+				<?= $form->field($model, 'showpriority')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'showbusinesstype')->dropDownList([ 'N' => 'Nationwide', 'S' => 'States', 'z'=> 'Zip' ])->label('') ?>
             </div>
             <div class="col-sm-3 col-md-3">
             
