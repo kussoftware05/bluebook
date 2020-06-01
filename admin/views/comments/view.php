@@ -44,10 +44,11 @@ $user= User::find()->all();
 	</thead>
 	<tbody>
 	<?php
+	$count = 1;
 	foreach($model as $m)
 	{
 	?>
-	<tr><td></td>
+	<tr><td><?=$count;?></td>
 	<td><?=$m->comments;?></td>
 	<td><?=$m->user->first_name?></td>
 	<td><?=date('d-m-Y',strtotime($m->commentedon))?></td>
@@ -56,15 +57,16 @@ $user= User::find()->all();
 	<?php if($m->published)
 		{	
 		?>
-		<?= Html::tag('p', Html::encode('Not Published'), ['class' => 'btn btn-primary']) ?>
+		<?= Html::a('Not Published', ['update','id' => $m->id], ['class' => 'btn btn-primary']) ?>
 		<?php
 		}
 		else
 		{
 		?>
-		<?= Html::tag('p', Html::encode('Published'), ['class' => 'btn btn-primary']) ?>
+		<?= Html::a('Published', ['update','id' => $m->id], ['class' => 'btn btn-primary']) ?>
 		<?php	
 		}
+		$count++;
 		?>
 	</td>
 	
