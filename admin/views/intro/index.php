@@ -52,10 +52,18 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'html',
 				'value' => function($model){
 					return 
-					'<img src="'. Yii::$app->request->baseUrl.'/images/intro/'.$model->filename.' " height="135" width="140" style="border-radius: 50%;" />';
+					($model->filetype=='I')?
+					'<img src="'. Yii::$app->request->baseUrl.'/images/intro/'.$model->filename.' " height="135" width="140" style="border-radius: 50%;" />':
+					'';
 				}
 			],
-			'filetype',
+			[
+				'attribute' => 'filetype',
+				'format' => 'raw',
+				'value' =>  function ($model) {
+					return ($model->filetype=='I') ?'Image':'Video';
+				}
+			],
 			'displayorder',
             ['class' => 'yii\grid\ActionColumn'],
         ],
