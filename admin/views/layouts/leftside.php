@@ -105,23 +105,6 @@ if(!empty($changepassword))
                             ]
                         ]
                     ],
-					/*[
-                        'label' => 'News Comments',
-                        'icon' => 'fa fa-list-alt',
-                        'url' => '#',
-                        'items' => [
-                            [
-                                'label' => 'Create',
-                                'icon' => 'fa fa-list-alt',
-                                'url' => ['/news-comments/create'],
-                            ],
-                            [
-                                'label' => 'News List',
-                                'icon' => 'fa fa-list-alt',
-                                'url' => ['/news-comments/index'],
-                            ]
-                        ]
-                    ],*/
 					[
                         'label' => 'Business Directory',
                         'icon' => 'fa fa-list-alt',
@@ -138,6 +121,23 @@ if(!empty($changepassword))
                                 'icon' => 'fa fa-list-alt',
                                 'url' => ['/business/index'],
                                 //'active' => $this->context->route == 'master2/index'
+                            ]
+                        ]
+                    ],
+					[
+                        'label' => 'AD Intro',
+                        'icon' => 'fa fa-list-alt',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Create',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/intro/create'],
+                            ],
+                            [
+                                'label' => 'Intro List',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/intro/index'],
                             ]
                         ]
                     ],
