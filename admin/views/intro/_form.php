@@ -42,10 +42,16 @@ use dosamigos\ckeditor\CKEditor;
 ?>
 	<?= $form->field($model, 'filetype')->dropDownList([ 'I' => 'Image', 'V' => 'Video']) ?>
 	<?= $form->field($model, 'filename')->fileInput()->label('Upload Image/Video') ?>
-	<?php if($model->filename!=''){?>
+	<?php if($model->filename!='' && $model->filetype=='I'){?>
      		    <img src="<?= Yii::$app->request->baseUrl.'/images/intro/'.$model->filename ?>" height="135" width="140" style="border-radius: 50%;" />
 		    <?php } ?>
-    
+    <?php if($model->filename!='' && $model->filetype=='V'){?>
+				<video width="320" height="240" controls>
+				  <source src="<?= Yii::$app->request->baseUrl.'/images/intro/'.$model->filename ?>" type="video/mp4">
+				Your browser does not support the video tag.
+				</video>
+     		    
+		    <?php } ?>
 	<?= $form->field($model, 'displayorder')->textInput(['maxlength' => true]) ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -33,7 +33,7 @@ class AdIntro extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title','description','filename'], 'string'],
-			[['filename'], 'safe'],
+			[['filetype'], 'safe'],
             [['displayorder'], 'integer'],
             [['filename'], 'string', 'max' => 255],
             [['title'], 'unique'],

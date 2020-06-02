@@ -49,22 +49,28 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute' => 'filename',
 				'label' => 'Intro Image/Video',
-				'format' => 'html',
+				'format' => 'raw',
+				'headerOptions' => ['style' => 'text-align: center'],
+				'contentOptions' => ['style' => 'text-align: center'],
 				'value' => function($model){
 					return 
 					($model->filetype=='I')?
 					'<img src="'. Yii::$app->request->baseUrl.'/images/intro/'.$model->filename.' " height="135" width="140" style="border-radius: 50%;" />':
-					'';
+					'<iframe  width="200" height="200" src="'. Yii::$app->request->baseUrl.'/images/intro/'.$model->filename.' " frameborder="0" ></iframe>';
 				}
 			],
 			[
 				'attribute' => 'filetype',
 				'format' => 'raw',
+				'headerOptions' => ['style' => 'width:10%'],
 				'value' =>  function ($model) {
 					return ($model->filetype=='I') ?'Image':'Video';
 				}
 			],
-			'displayorder',
+			[
+				'attribute' => 'displayorder',
+				'headerOptions' => ['style' => 'width:10%'],
+			],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

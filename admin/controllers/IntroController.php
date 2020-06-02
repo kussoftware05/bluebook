@@ -106,7 +106,7 @@ class IntroController extends Controller
 
 			if ( !is_null( $uploadedFile ) )
 			{
-				if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+				if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg','mp4')))
 				{
 					$uploadedFile->saveAs(Yii::getAlias('@webroot/images/intro/').$uploadedFile -> name);
 					$model->filename = $uploadedFile -> name;	
