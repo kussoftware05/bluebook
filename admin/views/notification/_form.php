@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use dosamigos\ckeditor\CKEditor;
 /* @var $this yii\web\View */
-/* @var $model admin\models\AdIntro */
+/* @var $model admin\models\Notification */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -22,8 +22,8 @@ use dosamigos\ckeditor\CKEditor;
               'preset' => 'advanced',
               'clientOptions' => [
                   'extraPlugins' => '',
-                  'height' => 500,
-
+                  'height' => 300,
+					
                   //Here you give the action who will handle the image upload 
                   'filebrowserUploadUrl' => '/site/ckeditor_image_upload',
 
@@ -38,11 +38,16 @@ use dosamigos\ckeditor\CKEditor;
               ]
 
             ]) 
-
+			
 ?>
-	
+	<?php
+	foreach($user as $v)
+	{
+		echo Html::hiddenInput('user[]', $v);
+	}
+	?>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

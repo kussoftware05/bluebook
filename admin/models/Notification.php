@@ -35,7 +35,7 @@ class Notification extends \yii\db\ActiveRecord
 			[['send_notification'], 'safe'],
             [['userId'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['title'], 'unique'],
+            
         ];
     }
 

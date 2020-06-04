@@ -66,13 +66,50 @@ class NotificationController extends Controller
     public function actionSend()
     {
         $model = new Notification();
-
+		if(Yii::$app->request->post('selection'))
+		{
+			$user = Yii::$app->request->post('selection');
+			foreach($user as $v)
+			{
+				$userNotice = Notification::findOne($v);
+				if($userNotice)
+				{
+					Yii::$app->session->setFlash('error', "Sorry!!Notification has been sent to these user");
+					return $this->redirect(['index']);
+				}
+			}
+		}
+		if(Yii::$app->request->post('user'))
+		{
+			$user = Yii::$app->request->post('user');
+		}
+		if(!isset($user))
+		{
+			Yii::$app->session->setFlash('error', "Please select at least one user");
+			return $this->redirect(['index']);
+		}
         if ( $model->load(Yii::$app->request->post()) ) {
 
             if ( $model->validate() )
             {
                 
-                $model->save();
+				if($user)
+				{
+					foreach($user as $v)
+					{
+						$noticemodel = new Notification();
+						$noticemodel->title = $model->title;
+						$noticemodel->notification_body = $model->notification_body;
+						$noticemodel->send_notification = 1;
+						$noticemodel->sendnotification_date = date("Y-m-d");
+						$noticemodel->userId = $v;
+						$userNotice = Notification::findOne($v);
+						if(!$userNotice)
+						{
+							$noticemodel->save();
+						}
+					}
+				}
                 Yii::$app->session->setFlash('success', "Notification Send Successfully");	
                 return $this->redirect(['index']);
             }
@@ -85,6 +122,7 @@ class NotificationController extends Controller
         } else {
             return $this->render('send', [
                 'model' => $model,
+				'user' => $user
             ]);
         }
     }

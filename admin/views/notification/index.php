@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 use admin\models\Notification;
 use admin\models\User;
 /* @var $this yii\web\View */
@@ -27,9 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Yii::$app->session->getFlash('error') ?>
     </div>
 	<?php endif ?>
-	
+	<?php $form = ActiveForm::begin(
+		['action' => 'send']
+		); ?>
     <p>
-        <?= Html::a('Send Notification', ['send'], ['class' => 'btn btn-success']) ?>
+        
+		<?= Html::submitButton('Send Notification', ['class' => 'btn btn-success']) ?>
+		
+
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -41,10 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 			'email',
 			
-			['class' => 'yii\grid\CheckboxColumn']
-           // ['class' => 'yii\grid\ActionColumn'],
+			['class' => 'yii\grid\CheckboxColumn', 'checkboxOptions' => function($model){
+			return ["value" => $model->id];
+			}
+			]
+           //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
+<?php ActiveForm::end(); ?>
 
 </div>
