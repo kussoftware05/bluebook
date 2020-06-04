@@ -141,6 +141,23 @@ if(!empty($changepassword))
                             ]
                         ]
                     ],
+					[
+                        'label' => 'Notification',
+                        'icon' => 'fa fa-list-alt',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Create',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/intro/create'],
+                            ],
+                            [
+                                'label' => 'List',
+                                'icon' => 'fa fa-list-alt',
+                                'url' => ['/notification/index'],
+                            ]
+                        ]
+                    ],
                     [
                         'label' => 'Pages',
                         'icon' => 'fa fa-folder',
