@@ -65,20 +65,6 @@ return [
         'viewPath' => '@admin/mail',
         'useFileTransport' => false,//set this property to false to send mails to real email addresses
         //comment the following array to send mail using php's mail function
-        'transport' => [
-            'class' => 'Swift_SmtpTransport',
-            'host' => 'smtp.gmail.com',
-            'username' => 'kussoftware05@gmail.com',
-            'password' => 'kus12345',
-            'port' => '587' ,
-            'encryption' => 'tls' ,
-			'streamOptions' => [
-				'ssl' => [
-					'verify_peer' => false,
-					'verify_peer_name' => false,
-				],
-			],
-			],
 		],
     ],
     'params' => $params,

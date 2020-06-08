@@ -115,13 +115,10 @@ class NotificationController extends Controller
 						{
 							$noticemodel->save();
 							$mail = Yii::$app->mailer->compose()
-							//->setFrom('kussoftware05@gmail.com')
-							//->setTo('manisumana94@gmail.com')
+							->setFrom('kussoftware05@gmail.com')
 							->setTo('manisumana94@gmail.com')
-							->setSubject('This is test mail')					
-							->setTextBody('This is Plain text content')
-							->setHtmlBody('Please go to  <a href="http://google.com/">GOOGLE</a>')
-							//->setHtmlBody($model->notification_body)
+							->setSubject($model->title)		
+							->setHtmlBody($model->notification_body)
 							->send();	
 							if($mail)
 							{
