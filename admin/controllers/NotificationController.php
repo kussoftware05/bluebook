@@ -11,6 +11,13 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+// Load Composer's autoloader
+//require 'vendor/autoload.php';
+
 /**
  * AdIntroController implements the CRUD actions for AdIntro model.
  */
@@ -107,11 +114,28 @@ class NotificationController extends Controller
 						if(!$userNotice)
 						{
 							$noticemodel->save();
+							$mail = Yii::$app->mailer->compose()
+							//->setFrom('kussoftware05@gmail.com')
+							//->setTo('manisumana94@gmail.com')
+							->setTo('manisumana94@gmail.com')
+							->setSubject('This is test mail')					
+							->setTextBody('This is Plain text content')
+							->setHtmlBody('Please go to  <a href="http://google.com/">GOOGLE</a>')
+							//->setHtmlBody($model->notification_body)
+							->send();	
+							if($mail)
+							{
+								Yii::$app->session->setFlash('success', "Mail Send Successfully");	
+								return $this->redirect(['index']);
+							}
+							else
+							{
+								Yii::$app->session->setFlash('error', "Mail is not sending");	
+								return $this->redirect(['index']);
+							}							
 						}
 					}
 				}
-                Yii::$app->session->setFlash('success', "Notification Send Successfully");	
-                return $this->redirect(['index']);
             }
             else
             {
