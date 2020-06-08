@@ -98,8 +98,7 @@ class NotificationController extends Controller
         if ( $model->load(Yii::$app->request->post()) ) {
 
             if ( $model->validate() )
-            {
-                
+            {             
 				if($user)
 				{
 					foreach($user as $v)
@@ -114,15 +113,17 @@ class NotificationController extends Controller
 						if(!$userNotice)
 						{
 							$noticemodel->save();
+							$userDetails = User::findOne($v);
+							$email = $userDetails['email'];
 							$mail = Yii::$app->mailer->compose()
 							->setFrom('kussoftware05@gmail.com')
-							->setTo('manisumana94@gmail.com')
+							->setTo($email)
 							->setSubject($model->title)		
 							->setHtmlBody($model->notification_body)
 							->send();	
 							if($mail)
 							{
-								Yii::$app->session->setFlash('success', "Mail Send Successfully");	
+								Yii::$app->session->setFlash('success', "Notification Send Successfully");	
 								return $this->redirect(['index']);
 							}
 							else
