@@ -45,7 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+<<<<<<< HEAD
 			'first_name',
+=======
+			'email',
+>>>>>>> 1d71dced2658c879bdd0585bd7e5c63df943a945
 			
 			['class' => 'yii\grid\CheckboxColumn', 'checkboxOptions' => function($model){
 			return ["value" => $model->id];
