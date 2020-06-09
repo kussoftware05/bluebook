@@ -26,6 +26,7 @@ return [
 			'authTimeout' => 300,
             'identityCookie' => ['name' => '_identity-admin', 'httpOnly' => true],
         ],
+		
         'session' => [
             // this is the name of the session cookie used for login on the admin
             'name' => 'advanced-admin',

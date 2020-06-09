@@ -40,7 +40,7 @@ class NewsCommentsSearch extends NewsComments
      */
     public function search($params)
     {
-        $query = NewsComments::find();
+        $query = NewsComments::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

@@ -29,8 +29,7 @@ class CommentsController extends Controller
             ],
         ];
     }
-
-    
+	
     /**
      * Displays comments by newsId.
      * @param integer $id
@@ -44,6 +43,29 @@ class CommentsController extends Controller
             'model' => $model,
         ]);
     }
-
+	/*
+	* published/not published news comments
+	* parameter $id integer
+	* return mixed
+	*/
+	public function actionUpdate($id)
+    {
+        $model = NewsComments::findOne($id);
+		$commentsmodel = NewsComments::find()->where(['newsId' => $id])->orderBy(['id' => SORT_DESC])->all();
+		if ($model->load(Yii::$app->request->post()))
+		{
+			$model->save();
+            Yii::$app->session->setFlash('success', "Comment Published Successfully");	
+            return $this->render('view', [
+            'model' => $commentsmodel,
+			]);
+		}
+		else
+		{
+			return $this->render('update', [
+				'model' => $model,
+			]);
+		}
+    }
 }
 

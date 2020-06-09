@@ -274,4 +274,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             return '<span class="label label-warning">USER</span>'; 
         }
     }
+	public function getNotification()
+    {
+        return $this->hasOne(Notification::className(), ['userId' => 'id']);
+    }
 }
