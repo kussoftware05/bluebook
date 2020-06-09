@@ -11,8 +11,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-<<<<<<< HEAD
-=======
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -20,7 +18,6 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader
 //require 'vendor/autoload.php';
 
->>>>>>> 1d71dced2658c879bdd0585bd7e5c63df943a945
 /**
  * AdIntroController implements the CRUD actions for AdIntro model.
  */
@@ -101,12 +98,7 @@ class NotificationController extends Controller
         if ( $model->load(Yii::$app->request->post()) ) {
 
             if ( $model->validate() )
-<<<<<<< HEAD
-            {
-                
-=======
             {             
->>>>>>> 1d71dced2658c879bdd0585bd7e5c63df943a945
 				if($user)
 				{
 					foreach($user as $v)
@@ -121,20 +113,6 @@ class NotificationController extends Controller
 						if(!$userNotice)
 						{
 							$noticemodel->save();
-<<<<<<< HEAD
-							Yii::$app->mailer->compose()
-							->setFrom('kusdemos@info.com')
-							->setTo($email)
-							->setSubject('Newsletter Confirmation')
-							->setTextBody('Plain text content')
-							->setHtmlBody( $data )
-							->send();
-						}
-					}
-				}
-                Yii::$app->session->setFlash('success', "Notification Send Successfully");	
-                return $this->redirect(['index']);
-=======
 							$userDetails = User::findOne($v);
 							$email = $userDetails['email'];
 							$mail = Yii::$app->mailer->compose()
@@ -156,7 +134,6 @@ class NotificationController extends Controller
 						}
 					}
 				}
->>>>>>> 1d71dced2658c879bdd0585bd7e5c63df943a945
             }
             else
             {
