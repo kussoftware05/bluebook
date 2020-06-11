@@ -38,20 +38,25 @@ class AppController extends ActiveController
 	public function actionLogin()
     {
 		$data = array();
-		API::getInputDataArray($data, array('username', 'password'));
-		//if (!API::getInputDataArray($data, array('username', 'password')))
-           // return;
-		//$user = User::findByUsername($data['username']);
-		/*if(!$user || (!$user->validatePassword($data['password'])))
+		
+		if (!API::getInputDataArray($data, array('username','password')))
+		{
+            return API::echoJsonError('ERROR: Please provide username and password'.$data);
+		}
+		
+		$user = User::findByUsername($data['username']);
+		if(!$user || (!$user->validatePassword($data['password'])))
 		{
 			return API::echoJsonError('ERROR: Username and / or password were Incorrect');
-		}*/
-		$returnArray['error'] = $data['username'];
+		}
+		$userdetails = User::find()->where(['id' =>$user['id']])->All();
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('user'=>$userdetails);
 		return $returnArray;
 	}
 	public function actionSignup()
 	{
-		if (!API::getInputDataArray($data, array('name', 'email', 'country', 'password')))
+		if (!API::getInputDataArray($data, array('name', 'email', 'password')))
             return;
 		$emailCheck = User::find()->where(['email' =>$data['email']])->one();
 			
@@ -67,8 +72,8 @@ class AppController extends ActiveController
         $user->generateAuthKey();
 		$user->save();	
 		$returnArray['error'] = 0;
+		$returnArray['data'] = array('user'=>$user);
 		return $returnArray;
 	}
-	
 }
 	

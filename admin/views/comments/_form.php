@@ -18,7 +18,7 @@ use admin\models\Country;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'comments')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'comments')->textInput(['maxlength' => true, 'readOnly' => true]) ?>
 
 	<?= $form->field($model, 'published')->dropDownList([ '1' => 'Yes', '0' => 'No']) ?>
     
