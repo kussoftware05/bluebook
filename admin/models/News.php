@@ -24,6 +24,7 @@ use Yii;
  * @property int $totaldislike
  * @property string|null $address
  * @property string|null $city
+ * @property string|null $newspostedfrom
  * @property int|null $countryId
  * @property int|null $stateId
  *
@@ -47,7 +48,7 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['content', 'status', 'address', 'city'], 'string'],
+            [['content', 'status', 'address', 'city', 'newspostedfrom'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
             [['cat_id','userId', 'totallike', 'totaldislike', 'stateId', 'countryId'], 'integer'],
             [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
@@ -81,6 +82,7 @@ class News extends \yii\db\ActiveRecord
 			'address' => 'Address',
             'stateId' => 'State',
             'city' => 'City',
+			'newspostedfrom' => 'News Posted From',
         ];
     }
 	/*

@@ -75,7 +75,7 @@ use admin\models\Country;
 	
     <?php //echo $form->field($model, 'updated_at')->textInput() ?>
 
-     <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', 'P'=> 'Pending' ]) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Active', 'N' => 'In-Active', 'P'=> 'Pending' ]) ?>
 
 	<?php /*echo $form->field($model, 'cat_id')->dropDownList(
 				ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name'),
@@ -90,6 +90,8 @@ use admin\models\Country;
      		    <img src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" height="135" width="140" style="border-radius: 50%;" />
 		    <?php } ?>
     <?= $form->field($model, 'news_image')->fileInput() ?>
+
+	<?= $form->field($model, 'newspostedfrom')->dropDownList([ 'M' => 'Mobile', 'A' => 'Admin' ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

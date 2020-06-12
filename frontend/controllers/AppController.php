@@ -88,5 +88,20 @@ class AppController extends ActiveController
 		$returnArray['data'] = array('news'=>$news);
 		return $returnArray;
 	}
+	/*
+	* api for news list posted from mobile app
+	* 
+	*/
+	public function actionNewsPosted()
+	{
+		$news = News::find()->where(['newspostedfrom' => 'M'])->all();
+			
+		if (!isset($news))
+            return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('news'=>$news);
+		return $returnArray;
+	}
 }
 	
