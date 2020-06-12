@@ -6,25 +6,11 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use common\components\API;
 use common\models\User;
-
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
+use admin\models\News;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use frontend\models\FollowerDetails;
-use frontend\models\RequestDelete;
-use frontend\models\NominateLeader;
-use frontend\models\Categories;
-use frontend\models\Country;
-use frontend\models\NominateLeaderDetails;
-use frontend\models\Pages;
-use admin\models\Post;
-use admin\models\LeaderInvite;
 use yii\db\ActiveQuery;
 use yii\db\Query;
-use yii\data\SqlDataProvider;
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 
@@ -35,6 +21,11 @@ use yii\filters\AccessControl;
 class AppController extends ActiveController
 {
    	public $modelClass = 'frontend\models\LoginForm';
+	/*
+	* api for login
+	* request parameters
+	* {"data":{"username":"admin","password":"admin"}}
+	*/
 	public function actionLogin()
     {
 		$data = array();
@@ -54,6 +45,11 @@ class AppController extends ActiveController
 		$returnArray['data'] = array('user'=>$userdetails);
 		return $returnArray;
 	}
+	/*
+	* api for signup
+	* request parameters
+	* {"data":{"name":"admin2","email":"adminil@gmail.com","password":"adm#123"}}
+	*/
 	public function actionSignup()
 	{
 		if (!API::getInputDataArray($data, array('name', 'email', 'password')))
@@ -73,6 +69,22 @@ class AppController extends ActiveController
 		$user->save();	
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('user'=>$user);
+		return $returnArray;
+	}
+	/*
+	* api for news list
+	* request parameters
+	* {"data":{"name":"admin2","email":"adminil@gmail.com","password":"adm#123"}}
+	*/
+	public function actionNews()
+	{
+		$news = News::find()->all();
+			
+		if (!isset($news))
+            return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('news'=>$news);
 		return $returnArray;
 	}
 }
