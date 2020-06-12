@@ -9,9 +9,9 @@ return [
             'password' => 'z9v-TSV$Hg!R',
             'charset' => 'utf8',
 			*/
-			'dsn' => 'mysql:host=localhost;dbname=bluebook',
-            'username' => 'root',
-            'password' => '',
+			'dsn' => 'mysql:host=localhost;dbname=kusdemos_bluebook',
+            'username' => 'kusdemos_bluebok',
+            'password' => 'L-.)oaz]bOD+',
             'charset' => 'utf8',
         ],
         'mailer' => [

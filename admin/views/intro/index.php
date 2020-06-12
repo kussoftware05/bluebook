@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					return ($model->filetype=='I') ?'Image':'Video';
 				}
 			],
+			['attribute' => 'totalclick','filter' => false],
 			[
 				'attribute' => 'displayorder',
 				'headerOptions' => ['style' => 'width:10%'],

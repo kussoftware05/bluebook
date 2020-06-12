@@ -17,7 +17,7 @@ class AdIntroSearch extends AdIntro
     public function rules()
     {
         return [
-            [['id', 'displayorder'], 'integer'],
+            [['id', 'displayorder', 'totalclick'], 'integer'],
             [['filename', 'filetype','title','description'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class AdIntroSearch extends AdIntro
         $query->andFilterWhere([
             'id' => $this->id,
             'displayorder' => $this->displayorder,
+			'totalclick' => $this->totalclick,
         ]);
 
         $query->andFilterWhere(['like', 'filename', $this->filename])

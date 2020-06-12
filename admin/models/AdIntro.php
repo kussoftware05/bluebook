@@ -13,7 +13,7 @@ use Yii;
  * @property string $filename
  * @property int|null $filetype
  * @property int|null $displayorder
- *
+ * @property int|null $totalclick
  */
 class AdIntro extends \yii\db\ActiveRecord
 {
@@ -33,7 +33,7 @@ class AdIntro extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title','description','filename'], 'string'],
-			[['filetype'], 'safe'],
+			[['filetype','totalclick'], 'safe'],
             [['displayorder'], 'integer'],
             [['filename'], 'string', 'max' => 255],
             [['title'], 'unique'],
@@ -52,6 +52,7 @@ class AdIntro extends \yii\db\ActiveRecord
 			'description' => 'Description',
             'filetype' => 'Intro Type',
             'displyorder' => 'Display Order',
+			'totalclick' => 'Number of Click(s)'
         ];
     }
 	
