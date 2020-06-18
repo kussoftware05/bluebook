@@ -12,7 +12,8 @@ use yii\web\BadRequestHttpException;
 use yii\db\ActiveQuery;
 use yii\db\Query;
 use yii\filters\AccessControl;
-
+use admin\models\AdIntro;
+use admin\models\BusinessDirectory;
 
 
 /**
@@ -24,6 +25,7 @@ class AppController extends ActiveController
 	/*
 	* api for login
 	* request parameters
+	* url like "https://kusdemos.com/bluebook/app/login"
 	* {"data":{"username":"admin","password":"admin"}}
 	*/
 	public function actionLogin()
@@ -73,14 +75,18 @@ class AppController extends ActiveController
 		return $returnArray;
 	}
 	/*
-	* api for news list
+	* api for news list/details
 	* request parameters
-	* {"data":{"name":"admin2","email":"adminil@gmail.com","password":"adm#123"}}
+	* data:{"data":{"id":"2"}}
 	*/
 	public function actionNews()
 	{
 		$news = News::find()->all();
-			
+		
+		if(isset($data['id']))
+		{
+			$news = News::findOne($data['id']);
+		}
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
 		
@@ -101,6 +107,36 @@ class AppController extends ActiveController
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
+		return $returnArray;
+	}
+	/*
+	* api for AdIntro list
+	* 
+	*/
+	public function actionIntro()
+	{
+		$aditems = AdIntro::find()->all();
+			
+		if (!isset($aditems))
+            return API::echoJsonError ('ERROR: no items in ad_intro table', 'No any intro items found.');
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('aditems'=>$aditems);
+		return $returnArray;
+	}
+	/*
+	* api for Business Directory list
+	* 
+	*/
+	public function actionAdvertisements()
+	{
+		$business = BusinessDirectory::find()->all();
+			
+		if (!isset($business))
+            return API::echoJsonError ('ERROR: no items in business_directory table', 'No any business items found.');
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$business);
 		return $returnArray;
 	}
 }
