@@ -54,7 +54,7 @@ class AppController extends ActiveController
 	*/
 	public function actionSignup()
 	{
-		if (!API::getInputDataArray($data, array('name', 'email', 'phone', 'password')))
+		if (!API::getInputDataArray($data, array('name', 'email', 'phone', 'password', 'user_lat', 'user_long')))
             return;
 		$emailCheck = User::find()->where(['email' =>$data['email']])->one();
 			
@@ -68,6 +68,8 @@ class AppController extends ActiveController
 		$user->usertype = 'F';
 		$user->gender = 'M';
 		$user->status = 'Y';
+		$user->user_lat = $data['user_lat'];
+		$user->user_long = $data['user_long'];
 		$user->setPassword($data['password']);
         $user->generateAuthKey();
 		$user->save();	

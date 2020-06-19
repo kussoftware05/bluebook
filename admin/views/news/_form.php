@@ -82,7 +82,7 @@ use admin\models\Country;
                         [ 'prompt'=>'Select a Category' ] 
                     )->label('Category')*/ ?>
 					
-	<?= $form->field($model, 'newstype')->dropDownList([ 'article' => 'Article', 'news' => 'News', 'story'=> 'Story' ]) ?>
+	<?= $form->field($model, 'newstype')->dropDownList([ 'N' => 'Nationwide', 'L' => 'Local']) ?>
 	
 	<?= $form->field($model, 'mediatype')->dropDownList([ 'image' => 'Image', 'video' => 'Video', 'embVideo'=> 'Embeded Video' ]) ?>
 	
