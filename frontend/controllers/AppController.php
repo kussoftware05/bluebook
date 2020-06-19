@@ -84,7 +84,7 @@ class AppController extends ActiveController
 	*/
 	public function actionNews()
 	{
-		$news = News::find()->all();
+		$news = News::find()->where(['status' =>'Y'])->all();
 		
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
