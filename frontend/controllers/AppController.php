@@ -32,7 +32,7 @@ class AppController extends ActiveController
     {
 		$data = array();
 		
-		if (!API::getInputDataArray($data, array('username','password')))
+		if (!API::getInputDataArray($data, array('username','password', 'user_lat', 'user_long')))
 		{
             return API::echoJsonError('ERROR: Please provide username and password'.$data);
 		}
@@ -42,6 +42,11 @@ class AppController extends ActiveController
 		{
 			return API::echoJsonError('ERROR: Username and / or password were Incorrect');
 		}
+		
+		$user->user_lat = $data['user_lat'];
+		$user->user_long = $data['user_long'];
+		$user->save();	
+		
 		$userdetails = User::find()->where(['id' =>$user['id']])->All();
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('user'=>$userdetails);
