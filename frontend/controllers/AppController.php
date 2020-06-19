@@ -67,6 +67,7 @@ class AppController extends ActiveController
 		$user->phone = $data['phone'];
 		$user->usertype = 'F';
 		$user->gender = 'M';
+		$user->status = 'Y';
 		$user->setPassword($data['password']);
         $user->generateAuthKey();
 		$user->save();	
@@ -83,10 +84,6 @@ class AppController extends ActiveController
 	{
 		$news = News::find()->all();
 		
-		if(isset($data['id']))
-		{
-			$news = News::findOne($data['id']);
-		}
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
 		
@@ -94,6 +91,19 @@ class AppController extends ActiveController
 		$returnArray['data'] = array('news'=>$news);
 		return $returnArray;
 	}
+	
+	
+	// news details
+	public function actionNewsdetails()
+	{
+		if (!API::getInputDataArray($data, array('id')))
+            return;
+		$newsdetails= News::find()->where(['id' =>$data['id']])->one();
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('newsdetails'=>$newsdetails);
+		return $returnArray;
+	}
+
 	/*
 	* api for news list posted from mobile app
 	* 
@@ -140,4 +150,3 @@ class AppController extends ActiveController
 		return $returnArray;
 	}
 }
-	
