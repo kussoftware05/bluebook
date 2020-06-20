@@ -14,6 +14,8 @@ use yii\db\Query;
 use yii\filters\AccessControl;
 use admin\models\AdIntro;
 use admin\models\BusinessDirectory;
+use admin\models\State;
+use admin\models\Country;
 
 
 /**
@@ -99,6 +101,56 @@ class AppController extends ActiveController
 		return $returnArray;
 	}
 	
+	/*
+	* api for add news details
+	* request parameters
+	* data:{"data":{"title":"News1", "userId":"1"}}
+	* https://kusdemos.com/bluebook/app/post-content
+	*/
+	public function actionPostContent()
+	{
+		if (!API::getInputDataArray($data, array('title','userId')))
+            return;
+		$newsCheck = News::find()->where(['title' =>$data['title']])->one();
+			
+		if (isset($newsCheck))
+            return API::echoJsonError ('ERROR: Title was already in the News table', 'The given title has to be unique.');
+		
+		$news = new News();
+		$news->title = $data['title'];
+		$news->userId = $data['userId'];
+		
+		if(isset($_FILES['news_image']))
+		{
+			$news_image = $_FILES['news_image']['name'];
+			
+			$incoming_report_path = Yii::getAlias('@webroot/admin/images/news/'.$news_image);
+            if (!move_uploaded_file($_FILES['news_image']['tmp_name'], $incoming_report_path))
+            {
+                return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['news_image'], true));
+            }
+			$news->news_image = $news_image;
+        }
+		if(isset($_FILES['news_video']))
+		{
+			$news_video = $_FILES['news_video']['name'];
+			
+			$incoming_report_path = Yii::getAlias('@webroot/admin/videos/news/'.$news_video);
+            if (!move_uploaded_file($_FILES['news_video']['tmp_name'], $incoming_report_path))
+            {
+                return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['news_video'], true));
+            }
+			$news->news_image = $news_video;
+        }
+		if(isset($data['content']))
+			$news->content = $data['content'];
+				
+		$news->save();	
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('news'=>$news);
+		return $returnArray;
+	}
+	
 	
 	// news details
 	public function actionNewsdetails()
@@ -154,6 +206,100 @@ class AppController extends ActiveController
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('data'=>$business);
+		return $returnArray;
+	}
+	/*
+	* api for post ad
+	* request parameters
+	* data:{"data":{"business_name":"bus1"}}
+	*/
+	public function actionPostAd()
+	{
+		if (!API::getInputDataArray($data, array('business_name','address1')))
+            return;
+		$isBusinessName = BusinessDirectory::find()->where(['business_name' =>$data['business_name']])->one();
+			
+		if (isset($isAdtvertiseName))
+            return API::echoJsonError ('ERROR: advertise name already exist in the business_directory table', 'The given advertise already exist.');
+		$business = new BusinessDirectory();
+		$business->business_name = $data['business_name'];
+		
+		if(isset($data['email']))
+		{
+			$business->email = $data['email'];
+		}
+		if(isset($data['weburl']))
+		{
+			$business->weburl = $data['weburl'];
+		}
+		if(isset($data['contactno']))
+		{
+			$business->contactno = $data['contactno'];
+		}
+		if(isset($data['otherinfo']))
+		{
+			$business->otherinfo = $data['otherinfo'];
+		}
+		
+		$bannerImg = "";
+		if(isset($_FILES['bannerimg']))
+		{
+			$bannerImg = $_FILES['bannerimg']['name'];
+			
+			$imagePath = Yii::getAlias('@webroot/admin/images/bannerImage/'.$bannerImg);
+            if (!move_uploaded_file($_FILES['bannerimg']['tmp_name'], $imagePath))
+            {
+                return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['bannerimg'], true));
+            }
+			$business->bannerimg = $bannerImg;
+        }
+		$smallBannerImage = "";
+		
+		if(isset($_FILES['small_banner_image']))
+		{
+			$smallBannerImage = $_FILES['small_banner_image']['name'];
+			
+			$imagePath = Yii::getAlias('@webroot/admin/images/smallBannerImage/'.$smallBannerImage);
+            if (!move_uploaded_file($_FILES['small_banner_image']['tmp_name'], $imagePath))
+            {
+                return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['small_banner_image'], true));
+            }
+			$business->small_banner_image = $smallBannerImage;
+        }
+		if(isset($data['address1']))
+		{
+			$business->address1 = $data['address1'];
+		}
+		if(isset($data['city']))
+		{
+			
+			$business->city = $data['city'];
+		}
+		if(isset($data['country']))
+		{
+			$countryRec = Country::find()->where(['name' =>$data['state']])->one();
+			if (!isset($countryRec))
+				return API::echoJsonError ('ERROR: country name not exist in the country table', 'The given country does not exist.');
+			$business->state = $countryRec->id;
+		}
+		if(isset($data['state']))
+		{
+			$stateRec = State::find()->where(['name' =>$data['country']])->one();
+			if (!isset($stateRec))
+				return API::echoJsonError ('ERROR: state name not exist in the state table', 'The given state does not exist.');
+			$business->state = $stateRec->id;
+		}
+		if(isset($data['zip']))
+		{
+			$business->zip = $data['zip'];
+		}
+		if(isset($data['description']))
+		{
+			$business->description = $data['description'];
+		}
+		$business->save();	
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('business'=>$business);
 		return $returnArray;
 	}
 }
