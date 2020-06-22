@@ -277,17 +277,17 @@ class AppController extends ActiveController
 		}
 		if(isset($data['country']))
 		{
-			$countryRec = Country::find()->where(['name' =>$data['state']])->one();
+			$countryRec = Country::find()->where(['name' =>$data['country']])->one();
 			if (!isset($countryRec))
 				return API::echoJsonError ('ERROR: country name not exist in the country table', 'The given country does not exist.');
-			$business->state = $countryRec->id;
+			$business->countryId = $countryRec->id;
 		}
 		if(isset($data['state']))
 		{
-			$stateRec = State::find()->where(['name' =>$data['country']])->one();
+			$stateRec = State::find()->where(['name' =>$data['state']])->one();
 			if (!isset($stateRec))
 				return API::echoJsonError ('ERROR: state name not exist in the state table', 'The given state does not exist.');
-			$business->state = $stateRec->id;
+			$business->stateId = $stateRec->id;
 		}
 		if(isset($data['zip']))
 		{
