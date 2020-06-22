@@ -16,7 +16,7 @@ use admin\models\AdIntro;
 use admin\models\BusinessDirectory;
 use admin\models\State;
 use admin\models\Country;
-
+use admin\models\NewsComments;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -300,6 +300,62 @@ class AppController extends ActiveController
 		$business->save();	
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('business'=>$business);
+		return $returnArray;
+	}
+	/*
+	* api for post ad
+	* request parameters
+	* {"data":{"newsId":"4", "userId":"4", "comments":"test api"}}
+	*/
+	public function actionPostComments()
+	{
+		if (!API::getInputDataArray($data, array('newsId', 'userId', 'comments')))
+            return;
+		
+		$userCheck = User::find()->where(['id' =>$data['userId']])->one();		
+		if (!isset($userCheck))
+            return API::echoJsonError ('ERROR: User does not exist', 'User does not exist');
+		
+		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		if (!isset($newsCheck))
+            return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
+		
+		$news_comments = new NewsComments();
+		$news_comments->newsId = $data['newsId'];
+		$news_comments->userId = $data['userId'];
+        $news_comments->comments = $data['comments'];
+		$news_comments->commentedon = date('Y-m-d H:i:s');
+		$news_comments->published = "1";
+		$news_comments->save();	
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$news_comments);
+		return $returnArray;
+	}
+	/*
+	* api for comments list
+	* request parameters
+	* data:{"data":{"newsId":"1"}}
+	*/
+	public function actionCommentsList()
+	{
+		if (!API::getInputDataArray($data, array('newsId')))
+            return;
+		
+		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		if (isset($userCheck))
+            return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
+		
+		$comments = NewsComments::find()->where(
+		[
+			'newsId' => $data['newsId'],
+			'published' => 1,
+		])->orderBy(['commentedon'=>SORT_ASC])->all();
+			
+		if (!isset($comments))
+            return API::echoJsonError ('ERROR: no items in comments table', 'No any comments items found.');
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$comments);
 		return $returnArray;
 	}
 }
