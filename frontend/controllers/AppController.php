@@ -85,9 +85,8 @@ class AppController extends ActiveController
 		return $returnArray;
 	}
 	/*
-	* api for news list/details
+	* api for news list
 	* request parameters
-	* data:{"data":{"id":"2"}}
 	*/
 	public function actionNews()
 	{
@@ -96,8 +95,37 @@ class AppController extends ActiveController
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
 		
+		foreach($news as $val){
+			$val['published_at'] = date("d/m/Y", strtotime($val['published_at']));
+			$val['updated_at'] = date("d/m/Y", strtotime($val['updated_at']));
+			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
+		}
+				
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
+		return $returnArray;
+	}
+	
+	/*
+	* api for news list/details
+	* request parameters
+	* data:{"data":{"id":"1"}}
+	*/
+	public function actionNewsdetails()
+	{
+		if (!API::getInputDataArray($data, array('id')))
+            return;
+		$newsdetails= News::find()->where(['id' =>$data['id']])->one();
+		
+		if (!isset($newsdetails))
+            return API::echoJsonError ('ERROR: no items in news table', 'No any news items found.');
+           
+		$newsdetails->published_at = date("d/m/Y", strtotime($newsdetails->published_at));
+    	$newsdetails->updated_at = date("d/m/Y", strtotime($newsdetails->updated_at));
+    	$newsdetails->news_image = 'http://kusdemos.com/bluebook/admin/images/news/'.$newsdetails->news_image;
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('newsdetails'=>$newsdetails);
 		return $returnArray;
 	}
 	
@@ -148,18 +176,6 @@ class AppController extends ActiveController
 		$news->save();	
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
-		return $returnArray;
-	}
-	
-	
-	// news details
-	public function actionNewsdetails()
-	{
-		if (!API::getInputDataArray($data, array('id')))
-            return;
-		$newsdetails= News::find()->where(['id' =>$data['id']])->one();
-		$returnArray['error'] = 0;
-		$returnArray['data'] = array('newsdetails'=>$newsdetails);
 		return $returnArray;
 	}
 
@@ -353,6 +369,15 @@ class AppController extends ActiveController
 			
 		if (!isset($comments))
             return API::echoJsonError ('ERROR: no items in comments table', 'No any comments items found.');
+		
+		foreach($comments as $val){
+			$val['commentedon'] = date("d/m/Y", strtotime($val['commentedon']));
+			
+			$userName = User::find()->where(['id' =>$val['userId']])->one();
+			$val['userId'] = $userName->first_name;
+			if (!isset($userName))
+				return API::echoJsonError ('ERROR: user name not exist in the user table', 'The given user does not exist.');
+		}
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('data'=>$comments);

@@ -27,6 +27,7 @@ use Yii;
  * @property string|null $newspostedfrom
  * @property int|null $countryId
  * @property int|null $stateId
+ * @property int|null $viewscount
  *
  * @property Category $cat
  * @property Image $image
@@ -50,7 +51,7 @@ class News extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['content', 'status', 'address', 'city', 'newspostedfrom'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
-            [['cat_id','userId', 'totallike', 'totaldislike', 'stateId', 'countryId'], 'integer'],
+            [['cat_id','userId', 'totallike', 'totaldislike', 'stateId', 'countryId', 'viewscount'], 'integer'],
             [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
