@@ -1,7 +1,7 @@
 <?php
 
 namespace admin\models;
-
+use DateTime;
 use Yii;
 
 /**
@@ -102,5 +102,47 @@ class News extends \yii\db\ActiveRecord
 	public function getTotalComments($id)
     {
 		return NewsComments::find()->where(['newsId' => $id])->count();
+    }
+	/*
+    * get date  time
+    */
+	public function getDatetime($date)
+    {
+		$olddate = $date;       //date as string
+		$now = time();                  //pick present time from server     
+		$old = strtotime($olddate);  //create integer value of old time
+		$diff =  $now-$old;             //calculate difference
+		$old = new DateTime($olddate);
+		$old = $old->format('Y M d');       //format date to "2015 Aug 2015" format
+
+		if ($diff /60 <1)                       //check the difference and do echo as required
+		{
+			$estimateDate = intval($diff%60)."seconds ago";
+		}
+		else if (intval($diff/60) == 1) 
+		{
+			$estimateDate = " 1 minute ago";
+		}
+		else if ($diff / 60 < 60)
+		{
+			$estimateDate =intval($diff/60)."minutes ago";
+		}
+		else if (intval($diff / 3600) == 1)
+		{
+			$estimateDate = "1 hour ago";
+		}
+		else if ($diff / 3600 <24)
+		{
+			$estimateDate = intval($diff/3600) . " hours ago";
+		}
+		else if ($diff/86400 < 30)
+		{
+			$estimateDate = intval($diff/86400) . " days ago";
+		}
+		else
+		{
+			$estimateDate = $old;  ////format date to "2015 Aug 2015" format
+		}
+		return $estimateDate;
     }
 }

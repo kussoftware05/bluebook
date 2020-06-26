@@ -18,6 +18,7 @@ use admin\models\State;
 use admin\models\Country;
 use admin\models\NewsComments;
 
+
 /**
  * PostController implements the CRUD actions for Post model.
  */
@@ -90,17 +91,20 @@ class AppController extends ActiveController
 	*/
 	public function actionNews()
 	{
+		$model = new News();
 		$news = News::find()->where(['status' =>'Y'])->all();
 		
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
 		
-		foreach($news as $val){
-			$val['published_at'] = date("d/m/Y", strtotime($val['published_at']));
-			$val['updated_at'] = date("d/m/Y", strtotime($val['updated_at']));
+		foreach($news as $val)
+		{
+			$val['published_at'] = $model->getDatetime($val['published_at']);
+			$val['updated_at'] = $model->getDatetime($val['updated_at']);
+			$val['content'] = strip_tags($val['content']);
 			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
 		}
-				
+			
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
 		return $returnArray;
@@ -115,13 +119,15 @@ class AppController extends ActiveController
 	{
 		if (!API::getInputDataArray($data, array('id')))
             return;
+		$model = new News();
 		$newsdetails= News::find()->where(['id' =>$data['id']])->one();
 		
 		if (!isset($newsdetails))
             return API::echoJsonError ('ERROR: no items in news table', 'No any news items found.');
            
-		$newsdetails->published_at = date("d/m/Y", strtotime($newsdetails->published_at));
-    	$newsdetails->updated_at = date("d/m/Y", strtotime($newsdetails->updated_at));
+		$newsdetails->published_at = $model->getDatetime($newsdetails->published_at);
+    	$newsdetails->updated_at = $model->getDatetime($newsdetails->updated_at);
+		$newsdetails->content = strip_tags($newsdetails->content);
     	$newsdetails->news_image = 'http://kusdemos.com/bluebook/admin/images/news/'.$newsdetails->news_image;
 		
 		$returnArray['error'] = 0;
@@ -185,10 +191,19 @@ class AppController extends ActiveController
 	*/
 	public function actionNewsPosted()
 	{
+		$model = new News();
 		$news = News::find()->where(['newspostedfrom' => 'M'])->all();
 			
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
+		
+		foreach($news as $val)
+		{
+			$val['published_at'] = $model->getDatetime($val['published_at']);
+			$val['updated_at'] = $model->getDatetime($val['updated_at']);
+			$val['content'] = strip_tags($val['content']);
+			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
+		}
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
@@ -371,9 +386,9 @@ class AppController extends ActiveController
             return API::echoJsonError ('ERROR: no items in comments table', 'No any comments items found.');
 		
 		foreach($comments as $val){
-			$val['commentedon'] = date("d/m/Y", strtotime($val['commentedon']));
-			
+			$val['commentedon'] = $model->getDatetime($val['commentedon']);		
 			$userName = User::find()->where(['id' =>$val['userId']])->one();
+			$val['comments'] = strip_tags($val['comments']);
 			$val['userId'] = $userName->first_name;
 			if (!isset($userName))
 				return API::echoJsonError ('ERROR: user name not exist in the user table', 'The given user does not exist.');
