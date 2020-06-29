@@ -51,6 +51,10 @@ class AppController extends ActiveController
 		$user->save();	
 		
 		$userdetails = User::find()->where(['id' =>$user['id']])->All();
+		if($userdetails->user_pic != '')
+		{
+			$userdetails->user_pic = 'http://kusdemos.com/bluebook/admin/images/user/'.$userdetails->user_pic;
+		}
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('user'=>$userdetails);
 		return $returnArray;
@@ -103,6 +107,7 @@ class AppController extends ActiveController
 			$val['updated_at'] = $model->getDatetime($val['updated_at']);
 			$val['content'] = strip_tags($val['content']);
 			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
+			$val['news_video'] = 'http://kusdemos.com/bluebook/admin/videos/news/'.$val['news_video'];
 		}
 			
 		$returnArray['error'] = 0;
@@ -129,6 +134,7 @@ class AppController extends ActiveController
     	$newsdetails->updated_at = $model->getDatetime($newsdetails->updated_at);
 		$newsdetails->content = strip_tags($newsdetails->content);
     	$newsdetails->news_image = 'http://kusdemos.com/bluebook/admin/images/news/'.$newsdetails->news_image;
+		$newsdetails->news_video = 'http://kusdemos.com/bluebook/admin/videos/news/'.$newsdetails->news_video;
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('newsdetails'=>$newsdetails);
@@ -174,7 +180,7 @@ class AppController extends ActiveController
             {
                 return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['news_video'], true));
             }
-			$news->news_image = $news_video;
+			$news->news_video = $news_video;
         }
 		if(isset($data['content']))
 			$news->content = $data['content'];

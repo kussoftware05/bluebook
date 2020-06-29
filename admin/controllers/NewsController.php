@@ -78,6 +78,12 @@ class NewsController extends Controller
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
                     $model->news_image = $uploadedFile -> name;	
                 }
+				$uploadedFile = UploadedFile::getInstance($model,'news_video');
+                if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('mp4', 'mp3')))
+                {
+                    $uploadedFile->saveAs(Yii::getAlias('@webroot/videos/news/').$uploadedFile -> name);
+                    $model->news_video = $uploadedFile -> name;	
+                }
                 $model->save();
                 Yii::$app->session->setFlash('success', "News Created Successfully");	
                 return $this->redirect(['index']);
@@ -112,7 +118,7 @@ class NewsController extends Controller
             if ($model->validate())
             {
                 $uploadedFile = UploadedFile::getInstance($model,'news_image');
-
+				$uploadedFileVideo = UploadedFile::getInstance($model,'news_image');
                 if ( !is_null( $uploadedFile ) )
                 {
                     if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
@@ -124,6 +130,18 @@ class NewsController extends Controller
                 else
                 {
                     $model->news_image = $this->findModel($id)->news_image;
+                }
+				if (!is_null($uploadedFileVideo))
+                {
+                    if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+                    {
+                        $uploadedFile->saveAs(Yii::getAlias('@webroot/videos/news/').$uploadedFile -> name);
+                        $model->news_video = $uploadedFile -> name;	
+                    }
+                }
+                else
+                {
+                    $model->news_video = $this->findModel($id)->news_video;
                 }
                
                 $model->save();

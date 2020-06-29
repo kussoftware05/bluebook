@@ -48,11 +48,11 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'userId'], 'required'],
             [['content', 'status', 'address', 'city', 'newspostedfrom'], 'string'],
             [['published_at', 'updated_at'], 'safe'],
             [['cat_id','userId', 'totallike', 'totaldislike', 'stateId', 'countryId', 'viewscount'], 'integer'],
-            [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype'], 'string', 'max' => 255],
+            [['title', 'short_desp', 'author', 'news_image', 'mediatype', 'newstype', 'news_video'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];
@@ -75,6 +75,7 @@ class News extends \yii\db\ActiveRecord
             'status' => 'Status',
             'cat_id' => 'Category',
             'news_image' => 'Image',
+			'news_video' => 'Video',
 			'mediatype' => 'Media Type',
 			'newstype' => 'News Type',
 			'totallike' => 'Total Like',

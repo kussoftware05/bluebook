@@ -90,6 +90,15 @@ use admin\models\Country;
      		    <img src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" height="135" width="140" style="border-radius: 50%;" />
 		    <?php } ?>
     <?= $form->field($model, 'news_image')->fileInput() ?>
+	
+	<?php if($model->news_video!=''){?>
+			<video width="320" height="240" controls>
+			  <source src="<?= Yii::$app->request->baseUrl.'/videos/news/'.$model->news_video ?>" type="video/mp4">
+			Your browser does not support the video tag.
+			</video>		    
+	    <?php } ?>
+
+	<?= $form->field($model, 'news_video')->fileInput() ?>
 
 	<?= $form->field($model, 'newspostedfrom')->dropDownList([ 'M' => 'Mobile', 'A' => 'Admin' ]) ?>
 
