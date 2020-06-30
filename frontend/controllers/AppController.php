@@ -246,6 +246,29 @@ class AppController extends ActiveController
 		return $returnArray;
 	}
 	/*
+	* api for adds list/details
+	* request parameters
+	* data:{"data":{"id":"2"}}
+	*/
+	public function actionAdDetails()
+	{
+		if (!API::getInputDataArray($data, array('id')))
+		return;
+		
+		$adDetails= BusinessDirectory::find()->where(['id' =>$data['id']])->one();
+		
+		if (!isset($adDetails))
+            return API::echoJsonError ('ERROR: no items in news table', 'No any news items found.');
+       
+		$adDetails->description = strip_tags($adDetails->description);
+    	$adDetails->bannerimg = 'http://kusdemos.com/bluebook/admin/images/bannerImage/'.$adDetails->bannerimg;
+		$adDetails->small_banner_image = 'http://kusdemos.com/bluebook/admin/images/smallBannerImage/'.$adDetails->small_banner_image;
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$adDetails);
+		return $returnArray;
+	}
+	/*
 	* api for post ad
 	* request parameters
 	* data:{"data":{"business_name":"bus1"}}
