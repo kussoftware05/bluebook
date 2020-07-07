@@ -84,21 +84,23 @@ use admin\models\Country;
 					
 	<?= $form->field($model, 'newstype')->dropDownList([ 'N' => 'Nationwide', 'L' => 'Local']) ?>
 	
-	<?= $form->field($model, 'mediatype')->dropDownList([ 'image' => 'Image', 'video' => 'Video', 'embVideo'=> 'Embeded Video' ]) ?>
+	<?= $form->field($model, 'mediatype')->dropDownList([ 'I' => 'Image', 'V' => 'Video', 'EV'=> 'Embeded Video' ]) ?>
 	
 	<?php if($model->news_image!=''){?>
      		    <img src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" height="135" width="140" style="border-radius: 50%;" />
 		    <?php } ?>
-    <?= $form->field($model, 'news_image')->fileInput() ?>
-	
-	<?php if($model->news_video!=''){?>
-			<video width="320" height="240" controls>
-			  <source src="<?= Yii::$app->request->baseUrl.'/videos/news/'.$model->news_video ?>" type="video/mp4">
-			Your browser does not support the video tag.
-			</video>		    
-	    <?php } ?>
+    <?= $form->field($model, 'news_image')->fileInput() ->label('Upload Image/Video') ?>
 
-	<?= $form->field($model, 'news_video')->fileInput() ?>
+	<?php if($model->news_image!='' && $model->mediatype == 'I'){?>
+     		    <img src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" height="135" width="140" style="border-radius: 50%;" />
+		    <?php } ?>
+    <?php if($model->news_image!='' && $model->mediatype == 'V'){?>
+				<video width="320" height="240" controls>
+				  <source src="<?= Yii::$app->request->baseUrl.'/images/news/'.$model->news_image ?>" type="video/mp4">
+				Your browser does not support the video tag.
+				</video>
+     		    
+		    <?php } ?>
 
 	<?= $form->field($model, 'newspostedfrom')->dropDownList([ 'M' => 'Mobile', 'A' => 'Admin' ]) ?>
 

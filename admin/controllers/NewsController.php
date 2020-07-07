@@ -70,20 +70,15 @@ class NewsController extends Controller
 
         if ( $model->load(Yii::$app->request->post()) ) {
 
-            if ( $model->validate() )
+            if ($model->validate())
             {
                 $uploadedFile = UploadedFile::getInstance($model,'news_image');
-                if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
+				if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg','mp4', 'mp3')))
                 {
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
                     $model->news_image = $uploadedFile -> name;	
                 }
-				$uploadedFile = UploadedFile::getInstance($model,'news_video');
-                if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('mp4', 'mp3')))
-                {
-                    $uploadedFile->saveAs(Yii::getAlias('@webroot/videos/news/').$uploadedFile -> name);
-                    $model->news_video = $uploadedFile -> name;	
-                }
+				$model->published_at = date("Y-m-d H:i:s"); 
                 $model->save();
                 Yii::$app->session->setFlash('success', "News Created Successfully");	
                 return $this->redirect(['index']);
@@ -118,8 +113,7 @@ class NewsController extends Controller
             if ($model->validate())
             {
                 $uploadedFile = UploadedFile::getInstance($model,'news_image');
-				$uploadedFileVideo = UploadedFile::getInstance($model,'news_image');
-                if ( !is_null( $uploadedFile ) )
+                if (!is_null( $uploadedFile ))
                 {
                     if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
                     {
@@ -131,19 +125,6 @@ class NewsController extends Controller
                 {
                     $model->news_image = $this->findModel($id)->news_image;
                 }
-				if (!is_null($uploadedFileVideo))
-                {
-                    if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
-                    {
-                        $uploadedFile->saveAs(Yii::getAlias('@webroot/videos/news/').$uploadedFile -> name);
-                        $model->news_video = $uploadedFile -> name;	
-                    }
-                }
-                else
-                {
-                    $model->news_video = $this->findModel($id)->news_video;
-                }
-               
                 $model->save();
                 Yii::$app->session->setFlash('success', "News Updated Successfully");	
                 return $this->redirect(['index']);

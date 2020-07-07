@@ -51,35 +51,16 @@ $user= User::find()->all();
 			],
 			'published_at:date',
 			[
-				'attribute' => 'news_video',
-				'label' => 'Video',
-				'format' => 'raw',
-				'headerOptions' => ['style' => 'text-align: center'],
-				'contentOptions' => ['style' => 'text-align: center'],
-				'value' => function($model){
-				    if($model->news_video != NULL){
-					return 
-					'<iframe  width="200" height="200" src="'. Yii::$app->request->baseUrl.'/videos/news/'.$model->news_video.' " frameborder="0" ></iframe>';
-				    }
-				    else{
-				        return 'No Videos';
-				    }
-				}
-			],
-			[
 				'attribute' => 'news_image',
 				'label' => 'Image',
 				'format' => 'raw',
 				'headerOptions' => ['style' => 'text-align: center'],
 				'contentOptions' => ['style' => 'text-align: center'],
 				'value' => function($model){
-				    if($model->news_image != NULL){
 					return 
-					'<img src="'. Yii::$app->request->baseUrl.'/images/news/'.$model->news_image.' " height="135" width="140" style="border-radius: 50%;" />';
-				    }
-				    else{
-				        return 'No Images';
-				    }
+					($model->mediatype=='I')?
+					'<img src="'. Yii::$app->request->baseUrl.'/images/news/'.$model->news_image.' " height="135" width="140" style="border-radius: 50%;" />':
+					($model->mediatype=='V')? '<iframe  width="200" height="200" src="'. Yii::$app->request->baseUrl.'/images/news/'.$model->news_image.' " frameborder="0" ></iframe>' : "No Media";
 				}
 			],
 			[

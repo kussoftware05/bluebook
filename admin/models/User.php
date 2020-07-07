@@ -278,4 +278,27 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Notification::className(), ['userId' => 'id']);
     }
+	/**
+     * get lat ong from address
+     */
+	public function getLatLong($address)
+	{
+		if(!empty($address))
+		{
+			//Formatted address
+			//$formattedAddr = str_replace(' ','+',$address);
+			//Send request and receive json data by address
+			//$url = "http://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($address)."&sensor=false";
+			//add urlencode to your address
+$address = urlencode("technopark, Trivandrun, kerala,India");
+$region = "IND";
+$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=".$address."&sensor=false&region=$region");
+
+echo $json;
+
+$decoded = json_decode($json);
+
+print_r($decoded); die;
+		}
+	}
 }

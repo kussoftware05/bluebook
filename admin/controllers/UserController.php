@@ -79,6 +79,13 @@ class UserController extends Controller
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/user/').$uploadedFile -> name);
                     $model->user_pic = $uploadedFile -> name;	
                 }
+				if(isset($model->address))
+				{
+					$latLong = User::getLatLong($model->address);
+					//print_r($latLong);die;
+					$model->user_lat = $latLong['latitude']?$latLong['latitude']:'';
+					$model->user_long = $latLong['longitude']?$latLong['longitude']:'';
+				}
                 $model->save();
                 Yii::$app->session->setFlash('success', "User Created Successfully");	
                 return $this->redirect(['index']);

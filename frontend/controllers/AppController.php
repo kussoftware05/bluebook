@@ -17,7 +17,8 @@ use admin\models\BusinessDirectory;
 use admin\models\State;
 use admin\models\Country;
 use admin\models\NewsComments;
-
+use admin\models\Notification;
+use admin\models\NewsLike;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -106,8 +107,10 @@ class AppController extends ActiveController
 			$val['published_at'] = $model->getDatetime($val['published_at']);
 			$val['updated_at'] = $model->getDatetime($val['updated_at']);
 			$val['content'] = strip_tags($val['content']);
-			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
-			$val['news_video'] = 'http://kusdemos.com/bluebook/admin/videos/news/'.$val['news_video'];
+			if($val['news_image'] != '')
+			{
+			    $val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
+			}
 		}
 			
 		$returnArray['error'] = 0;
@@ -134,7 +137,6 @@ class AppController extends ActiveController
     	$newsdetails->updated_at = $model->getDatetime($newsdetails->updated_at);
 		$newsdetails->content = strip_tags($newsdetails->content);
     	$newsdetails->news_image = 'http://kusdemos.com/bluebook/admin/images/news/'.$newsdetails->news_image;
-		$newsdetails->news_video = 'http://kusdemos.com/bluebook/admin/videos/news/'.$newsdetails->news_video;
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('newsdetails'=>$newsdetails);
@@ -170,17 +172,6 @@ class AppController extends ActiveController
                 return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['news_image'], true));
             }
 			$news->news_image = $news_image;
-        }
-		if(isset($_FILES['news_video']))
-		{
-			$news_video = $_FILES['news_video']['name'];
-			
-			$incoming_report_path = Yii::getAlias('@webroot/admin/videos/news/'.$news_video);
-            if (!move_uploaded_file($_FILES['news_video']['tmp_name'], $incoming_report_path))
-            {
-                return API::echoJsonError($errorMsg, 'There was an error recieving the assessmentzip POST param file. DEBUG: '.var_export($_FILES['news_video'], true));
-            }
-			$news->news_video = $news_video;
         }
 		if(isset($data['content']))
 			$news->content = $data['content'];
@@ -425,6 +416,131 @@ class AppController extends ActiveController
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('data'=>$comments);
+		return $returnArray;
+	}
+	/*
+	* api for Send Notification - https://kusdemos.com/bluebook/app/send-notification
+	* request parameters
+	* data:{"data":{"userId":"2", "title": "Mail test"}}
+	*/
+	public function actionSendNotification()
+	{
+		if (!API::getInputDataArray($data, array('userId', 'title')))
+		return;
+		
+		$userNotice = Notification::find()->where(['userId' =>$data['userId']])->one();
+		
+		if (isset($userNotice))
+            return API::echoJsonError ('ERROR: error', 'Sorry!!Notification has been sent to these user');
+		
+		if($data['userId'])
+		{
+			$user = $data['userId'];
+		}
+		if(!isset($user))
+				return API::echoJsonError ('ERROR: error', 'Sorry!!Please select at least one user');
+		          
+		if($user)
+		{
+			//foreach($user as $v)
+			//{
+				$noticemodel = new Notification();
+				$noticemodel->title = $data['title'];
+				if (isset($data['notification_body']))
+					$noticemodel->notification_body = $data['notification_body'];
+				$noticemodel->send_notification = 1;
+				$noticemodel->sendnotification_date = date("Y-m-d");
+				$noticemodel->userId = $user;
+				$userNotice = Notification::findOne($user);
+				if(!$userNotice)
+				{
+					$noticemodel->save();
+					$userDetails = User::findOne($user);
+					$email = $userDetails['email'];
+					$mail = Yii::$app->mailer->compose()
+					->setFrom('kussoftware05@gmail.com')
+					->setTo($email)
+					->setSubject($model->title)		
+					->setHtmlBody($model->notification_body)
+					->send();	
+					if($mail)
+					{
+						$message = API::echoJsonError ('SUCCESS: success', 'Mail sent successfully');
+					}
+					else
+					{
+						$message = API::echoJsonError ('ERROR: error', 'Mail is not sent');
+					}							
+				}
+			//}
+		}
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=> $message);
+		return $returnArray;
+	}
+	/*
+	* api for news like
+	* request parameters
+	* data:{"data":{"newsId":"31", "userId":"1", "like": "Y"}}
+	*/
+	public function actionNewsLike()
+	{
+		if (!API::getInputDataArray($data, array('newsId', 'userId', 'like')))
+            return;
+		
+		$userCheck = User::find()->where(['id' =>$data['userId']])->one();		
+		if (!isset($userCheck))
+            return API::echoJsonError ('ERROR: User does not exist', 'User does not exist');
+		
+		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		if (!isset($newsCheck))
+            return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
+		
+		$news_like = new NewsLike();
+		$news_like->newsId = $data['newsId'];
+		$news_like->userId = $data['userId'];
+        $news_like->like = $data['like'];
+		$news_like->ip_address = '127.0.0.1';
+		$news_like->like_date = date('Y-m-d H:i:s');
+		$news_like->save();	
+		
+		$newsCheck ->totallike = $newsCheck ->totallike+1;
+		$newsCheck->save();	
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$news_like);
+		return $returnArray;
+	}
+	/*
+	* api for news dis like
+	* request parameters
+	* data:{"data":{"newsId":"31", "userId":"1", "dislike": "N"}}
+	*/
+	public function actionNewsDislike()
+	{
+		if (!API::getInputDataArray($data, array('newsId', 'userId', 'dislike')))
+            return;
+		
+		$userCheck = User::find()->where(['id' =>$data['userId']])->one();		
+		if (!isset($userCheck))
+            return API::echoJsonError ('ERROR: User does not exist', 'User does not exist');
+		
+		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		if (!isset($newsCheck))
+            return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
+		
+		$news_like = new NewsLike();
+		$news_like->newsId = $data['newsId'];
+		$news_like->userId = $data['userId'];
+        $news_like->like = $data['like'];
+		$news_like->ip_address = '127.0.0.1';
+		$news_like->like_date = date('Y-m-d H:i:s');
+		$news_like->save();	
+		
+		$newsCheck ->totaldislike = $newsCheck ->totaldislike+1;
+		$newsCheck->save();	
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$news_like);
 		return $returnArray;
 	}
 }
