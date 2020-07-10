@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $newsId
  * @property int $userId
+ * @property int $views
  * @property string $ip_address
  * @property string $view_date
  */
@@ -30,7 +31,7 @@ class ViewDetails extends \yii\db\ActiveRecord
     {
         return [
             [['newsId', 'userId', 'ip_address', 'view_date'], 'required'],
-            [['newsId', 'userId'], 'integer'],
+            [['newsId', 'userId', 'views'], 'integer'],
             [['view_date'], 'safe'],
             [['ip_address'], 'string', 'max' => 100],
         ];
@@ -45,6 +46,7 @@ class ViewDetails extends \yii\db\ActiveRecord
             'id' => 'ID',
             'newsId' => 'News ID',
             'userId' => 'User ID',
+			'views' => 'Views',
             'ip_address' => 'Ip Address',
             'view_date' => 'View Date',
         ];

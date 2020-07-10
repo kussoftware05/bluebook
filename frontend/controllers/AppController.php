@@ -19,6 +19,7 @@ use admin\models\Country;
 use admin\models\NewsComments;
 use admin\models\Notification;
 use admin\models\NewsLike;
+use admin\models\ViewDetails;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -482,65 +483,97 @@ class AppController extends ActiveController
 	/*
 	* api for news like
 	* request parameters
-	* data:{"data":{"newsId":"31", "userId":"1", "like": "Y"}}
+	* data:{"data":{"newsId":"31", "userId":"1", "like": "Y", "ip_address":"199.79.63.203"}}
+	* data:{"data":{"newsId":"31", "userId":"1", "like": "N", "ip_address":"199.79.63.203"}}
 	*/
 	public function actionNewsLike()
 	{
-		if (!API::getInputDataArray($data, array('newsId', 'userId', 'like')))
+		if (!API::getInputDataArray($data, array('newsId', 'userId', 'like', 'ip_address')))
             return;
 		
 		$userCheck = User::find()->where(['id' =>$data['userId']])->one();		
 		if (!isset($userCheck))
             return API::echoJsonError ('ERROR: User does not exist', 'User does not exist');
 		
-		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		$newsCheck = News::find()->where(['id' =>$data['newsId'], 'userId' =>$data['userId']])->one();	
 		if (!isset($newsCheck))
             return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
 		
-		$news_like = new NewsLike();
-		$news_like->newsId = $data['newsId'];
-		$news_like->userId = $data['userId'];
-        $news_like->like = $data['like'];
-		$news_like->ip_address = '127.0.0.1';
-		$news_like->like_date = date('Y-m-d H:i:s');
-		$news_like->save();	
+		$newslikeCheck = NewsLike::find()->where(['ip_address' =>$data['ip_address']])->one();
+		if (isset($newslikeCheck))
+		{
+    		if ($newslikeCheck['like'] == "Y")
+    			return API::echoJsonError ('ERROR: error', 'Sorry!!You have already like this news');
+    		else
+    		    return API::echoJsonError ('ERROR: error', 'Sorry!!You have already dis-like this news');
+		}
 		
-		$newsCheck ->totallike = $newsCheck ->totallike+1;
-		$newsCheck->save();	
+		if($data['like'] == 'Y')
+		{
+			$news_like = new NewsLike();
+			$news_like->newsId = $data['newsId'];
+			$news_like->userId = $data['userId'];
+			$news_like->like = $data['like'];
+			$news_like->ip_address = $data['ip_address']; 
+			$news_like->like_date = date('Y-m-d H:i:s');
+			$news_like->save();	
+			
+			$newsCheck ->totallike = $newsCheck ->totallike+1;
+			$newsCheck->save();	
+		}
+		else if($data['like'] == 'N')
+		{
+			$news_like = new NewsLike();
+			$news_like->newsId = $data['newsId'];
+			$news_like->userId = $data['userId'];
+			$news_like->like = $data['like'];
+			$news_like->ip_address = $data['ip_address']; 
+			$news_like->like_date = date('Y-m-d H:i:s');
+			$news_like->save();	
+			
+			$newsCheck ->totaldislike = $newsCheck ->totaldislike+1;
+			$newsCheck->save();	
+		}
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('data'=>$news_like);
 		return $returnArray;
 	}
 	/*
-	* api for news dis like
+	* api for news like
 	* request parameters
-	* data:{"data":{"newsId":"31", "userId":"1", "dislike": "N"}}
+	* data:{"data":{"newsId":"31", "userId":"1", "like": "Y", "ip_address":"199.79.63.203"}}
+	* data:{"data":{"newsId":"31", "userId":"1", "like": "N", "ip_address":"199.79.63.203"}}
 	*/
-	public function actionNewsDislike()
+	public function actionNewsViews()
 	{
-		if (!API::getInputDataArray($data, array('newsId', 'userId', 'dislike')))
+		if (!API::getInputDataArray($data, array('newsId', 'userId', 'views', 'ip_address')))
             return;
 		
 		$userCheck = User::find()->where(['id' =>$data['userId']])->one();		
 		if (!isset($userCheck))
             return API::echoJsonError ('ERROR: User does not exist', 'User does not exist');
 		
-		$newsCheck = News::find()->where(['id' =>$data['newsId']])->one();	
+		$newsCheck = News::find()->where(['id' =>$data['newsId'], 'userId' =>$data['userId']])->one();	
 		if (!isset($newsCheck))
             return API::echoJsonError ('ERROR: News does not exist', 'News does not exist');
 		
-		$news_like = new NewsLike();
-		$news_like->newsId = $data['newsId'];
-		$news_like->userId = $data['userId'];
-        $news_like->like = $data['like'];
-		$news_like->ip_address = '127.0.0.1';
-		$news_like->like_date = date('Y-m-d H:i:s');
-		$news_like->save();	
+		$newslikeCheck = ViewDetails::find()->where(['ip_address' =>$data['ip_address']])->one();
+		if (isset($newslikeCheck))	
+    			return API::echoJsonError ('ERROR: error', 'Sorry!!You have already viewed this news');
 		
-		$newsCheck ->totaldislike = $newsCheck ->totaldislike+1;
+		$view_details = new ViewDetails();
+		$view_details->newsId = $data['newsId'];
+		$view_details->userId = $data['userId'];
+		$view_details->views = $data['views'];
+		$view_details->ip_address = $data['ip_address']; 
+		$view_details->view_date = date('Y-m-d H:i:s');
+		$view_details->save();	
+		
+		$newsCheck ->viewscount = $newsCheck ->viewscount+1;
 		$newsCheck->save();	
+		
 		$returnArray['error'] = 0;
-		$returnArray['data'] = array('data'=>$news_like);
+		$returnArray['data'] = array('data'=>$view_details);
 		return $returnArray;
 	}
 }
