@@ -59,7 +59,7 @@ $user= User::find()->all();
 				'value' => function($model){
 					return 
 					($model->mediatype=='I')?
-					'<img src="'. Yii::$app->request->baseUrl.'/images/news/'.$model->news_image.' " height="135" width="140" style="border-radius: 50%;" />':
+					'<img src="'. Yii::$app->request->baseUrl.'/images/news/thumb/thumb_'.$model->news_image.' width= 200px height=200px"  style="border-radius: 50%;" />':
 					($model->mediatype=='V')? '<iframe  width="200" height="200" src="'. Yii::$app->request->baseUrl.'/images/news/'.$model->news_image.' " frameborder="0" ></iframe>' : "No Media";
 				}
 			],

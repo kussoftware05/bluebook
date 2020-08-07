@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\base\Exception;
+use yii\imagine\Image;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -77,6 +79,11 @@ class NewsController extends Controller
                 {
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
                     $model->news_image = $uploadedFile -> name;	
+					// generate a thumbnail image
+					Image::thumbnail('@webroot/images/news/'.$uploadedFile -> name, 640, 363)
+						->save(Yii::getAlias('@webroot/images/news/thumb/thumb_'.$uploadedFile -> name), ['quality' => 50]);
+					
+					
                 }
 				$model->published_at = date("Y-m-d H:i:s"); 
                 $model->save();
@@ -118,7 +125,11 @@ class NewsController extends Controller
                     if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg')))
                     {
                         $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
-                        $model->news_image = $uploadedFile -> name;	
+                        $model->news_image = $uploadedFile -> name;
+
+						// generate a thumbnail image
+					Image::thumbnail('@webroot/images/news/'.$uploadedFile -> name, 640, 363)
+						->save(Yii::getAlias('@webroot/images/news/thumb/thumb_'.$uploadedFile -> name), ['quality' => 50]);
                     }
                 }
                 else
@@ -171,4 +182,34 @@ class NewsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	/**
+	 * 
+	 * Generate Thumbnail using Imagick class
+	 *  
+	 * @param string $img
+	 * @param string $width
+	 * @param string $height
+	 * @param int $quality
+	 * @return boolean on true
+	 * @throws Exception
+	 * @throws ImagickException
+	 */
+	function generateThumbnail($img, $width, $height, $quality = 90)
+	{
+		if (is_file($img)) {
+			$imagick = new Imagick(realpath($img));
+			$imagick->setImageFormat('jpeg');
+			$imagick->setImageCompression(Imagick::COMPRESSION_JPEG);
+			$imagick->setImageCompressionQuality($quality);
+			$imagick->thumbnailImage($width, $height, false, false);
+			$filename_no_ext = reset(explode('.', $img));
+			if (file_put_contents($filename_no_ext . '_thumb' . '.jpg', $imagick) === false) {
+				throw new Exception("Could not put contents.");
+			}
+			return true;
+		}
+		else {
+			throw new Exception("No valid image provided with {$img}.");
+		}
+	}
 }

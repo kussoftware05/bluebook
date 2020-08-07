@@ -79,7 +79,7 @@ class AppController extends ActiveController
 		$user->username = $data['email'];
 		$user->email = $data['email'];
 		$user->phone = $data['phone'];
-		$user->usertype = 'F';
+		$user->usertype = 'N';
 		$user->gender = 'M';
 		$user->status = 'Y';
 		$user->user_lat = $data['user_lat'];
@@ -98,7 +98,9 @@ class AppController extends ActiveController
 	public function actionNews()
 	{
 		$model = new News();
-		$news = News::find()->where(['status' =>'Y'])->all();
+		$news = News::find()->where(['status' =>'Y'])->orderBy([
+		  'published_at' => SORT_DESC
+		])->all();
 		
 		if (!isset($news))
             return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
@@ -176,7 +178,8 @@ class AppController extends ActiveController
         }
 		if(isset($data['content']))
 			$news->content = $data['content'];
-				
+		
+		$news->status = 'Y';
 		$news->save();	
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('news'=>$news);
@@ -574,6 +577,106 @@ class AppController extends ActiveController
 		
 		$returnArray['error'] = 0;
 		$returnArray['data'] = array('data'=>$view_details);
+		return $returnArray;
+	}
+	/*
+	* api for user signup
+	* request parameters
+	* data:{"data":{"first_name": "admin2", "last_name": "test", "email":"adminil@gmail.com", "password": "test1234","address":"test", "country":"1", "state":"1", "city":"ac"}}
+	*/
+	public function actionUsersignup()
+	{
+		if (!API::getInputDataArray($data, array('first_name', 'last_name', 'email', 'password', 'address', 'country', 'state', 'city')))
+            return;
+		$userCheck = User::find()->where(['email' =>$data['email']])->one();
+			
+		if (isset($userCheck))
+            return API::echoJsonError ('ERROR: user email was already in the User table', 'The given user already has an account associated with it.');
+		
+		$user = new User();
+		$user->first_name = $data['first_name'];
+		$user->last_name = $data['last_name'];
+		$user->email = $data['email'];
+		$user->setPassword($data['password']);
+		if(isset($data['address']))
+		{
+			$user->address = $data['address'];
+		}
+		if(isset($data['country']))
+		{
+			$countryRec = Country::find()->where(['name' =>$data['country']])->one();
+			if (!isset($countryRec))
+				return API::echoJsonError ('ERROR: country name not exist in the country table', 'The given country does not exist.');
+			$user->countryId = $countryRec->id;
+		}
+		if(isset($data['state']))
+		{
+			$stateRec = State::find()->where(['name' =>$data['state']])->one();
+			if (!isset($stateRec))
+				return API::echoJsonError ('ERROR: state name not exist in the state table', 'The given state does not exist.');
+			$user->stateId = $stateRec->id;
+		}
+		if(isset($data['city']))
+		{			
+			$user->city = $data['city'];
+		}
+		$user->usertype = 'V';
+		$user->save();	
+		$returnArray['error'] = 0;
+		
+		$returnArray['data'] = array('user'=>$user);
+		$returnArray['location'] = array('location'=>$user->address.$countryRec->name.$stateRec->name.$user->city);
+
+		return $returnArray;
+	}
+	/*
+	* api for news list posted from mobile app
+	* 
+	*/
+	public function actionExclusiveNews()
+	{
+		$model = new News();
+		$news = News::find()->orderBy(['id'=>SORT_DESC])->limit(10)->all();
+		
+			
+		if (!isset($news))
+            return API::echoJsonError ('ERROR: no news in news table', 'No any news items found.');
+		
+		foreach($news as $val)
+		{
+			$val['published_at'] = $model->getDatetime($val['published_at']);
+			$val['updated_at'] = $model->getDatetime($val['updated_at']);
+			$val['content'] = strip_tags($val['content']);
+			$val['news_image'] = 'http://kusdemos.com/bluebook/admin/images/news/'.$val['news_image'];
+		}
+		
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('news'=>$news);
+		return $returnArray;
+	}
+	/*
+	* api for search adds details
+	* request parameters
+	* data:{"data":{"search":"test"}}
+	*/
+	public function actionSearchDetails()
+	{
+		if (!API::getInputDataArray($data, array('search')))
+		return;
+		
+		$adDetails= BusinessDirectory::find()
+		->select('id, business_name')
+		->where(['like', 'business_name', $data['search']])
+		->orWhere(['or',
+		   ['like', 'description', $data['search']],
+       ])
+	   ->all();
+		
+		if (!isset($adDetails))
+            return API::echoJsonError ('ERROR: no items in news table', 'No any news items found.');
+       
+		$returnArray['error'] = 0;
+		$returnArray['data'] = array('data'=>$adDetails);
 		return $returnArray;
 	}
 }
