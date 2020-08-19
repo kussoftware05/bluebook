@@ -1,7 +1,0 @@
-/.idea
-/vendor
-/coverage
-/node_modules
-/package.json
-/package.lock
-/yarn.lock
