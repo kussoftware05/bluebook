@@ -661,22 +661,88 @@ class AppController extends ActiveController
 	*/
 	public function actionSearchDetails()
 	{
-		if (!API::getInputDataArray($data, array('search')))
-		return;
+ 		/*if (!API::getInputDataArray($data, array('search')))
+		return;*/
 		
-		$adDetails= BusinessDirectory::find()
-		->select('id, business_name')
-		->where(['like', 'business_name', $data['search']])
-		->orWhere(['or',
-		   ['like', 'description', $data['search']],
-       ])
+		$adDetails = BusinessDirectory::find()
+		->select('business_name')
+		->asArray()
+		//->where(['like', 'business_name', $data['search']])
+		//->orWhere(['or',
+		  // ['like', 'description', $data['search']],
+       //])
 	   ->all();
-		
+	   $name = array();
+		foreach($adDetails as $res){
+		       $name[] = $res['business_name'];
+		}
 		if (!isset($adDetails))
             return API::echoJsonError ('ERROR: no items in news table', 'No any news items found.');
        
 		$returnArray['error'] = 0;
-		$returnArray['data'] = array('data'=>$adDetails);
+		$returnArray['data'] = array('business_name'=>$name);
 		return $returnArray;
 	}
+	/*
+	* api for fetch temperature
+	* request parameters
+	* data:{"data":{"lattitude":"22.5726", "longitude":"88.3639"}}
+	*/
+	public function actionFetchTemp()
+	{
+ 		if (!API::getInputDataArray($data, array('lattitude', 'longitude')))
+ 		return;
+		
+		$lat = $data['lattitude'];
+        $lon = $data['longitude'];
+        
+        if(($lat != '') & ($lon != ''))
+        {
+        	$curl = curl_init();
+        
+        	curl_setopt_array($curl, array(
+        	CURLOPT_URL => "https://api.openweathermap.org/data/2.5/weather?lat=".$lat."&lon=".$lon."&appid=ce99bd301ef03117fc20b0196629d4a9",
+        	CURLOPT_RETURNTRANSFER => true,
+        	CURLOPT_FOLLOWLOCATION => true,
+        	CURLOPT_ENCODING => "",
+        	CURLOPT_MAXREDIRS => 10,
+        	CURLOPT_TIMEOUT => 30,
+        	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        	CURLOPT_CUSTOMREQUEST => "GET",
+        	CURLOPT_HTTPHEADER => array(
+        	"x-rapidapi-host: climacell-microweather-v1.p.rapidapi.com",
+        	"x-rapidapi-key: 23ec39e4eemsh89926f8df20b670p11196ejsnf23bb38d3dd0"
+        	),
+        	));
+        
+        	$response = curl_exec($curl);
+        	$err = curl_error($curl);
+        
+        	curl_close($curl);
+        
+        	if ($err) {
+        	echo "cURL Error #:" . $err;
+        	} else {
+        	  $response;
+        	}
+        }
+        if($response)
+        {
+        	$output = json_decode($response);
+        
+        	$cel = $output->main->temp;
+        	$temp = 9/5*($cel-273.15)+32;
+        	$name = $output->name;
+        	$date = date('l | M d');
+        }
+        
+		if (!isset($response))
+            return API::echoJsonError ('ERROR: no data found', 'No any items found.');
+       
+		$returnArray['error'] = 0;
+		$returnArray['data1'] = array('temp'=>$temp);
+		$returnArray['data2'] = array('name'=>$name);
+		$returnArray['data3'] = array('date'=>$date);
+		return $returnArray;
+    }
 }

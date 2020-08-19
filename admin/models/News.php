@@ -28,6 +28,7 @@ use Yii;
  * @property int|null $countryId
  * @property int|null $stateId
  * @property int|null $viewscount
+ * @property string|null videoimage
  *
  * @property Category $cat
  * @property Image $image

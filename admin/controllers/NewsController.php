@@ -12,6 +12,8 @@ use yii\web\UploadedFile;
 use yii\base\Exception;
 use yii\imagine\Image;
 
+$url = Yii::getAlias('@vendor').'\autoload.php';
+include $url;
 /**
  * NewsController implements the CRUD actions for News model.
  */
@@ -78,12 +80,33 @@ class NewsController extends Controller
 				if( isset($uploadedFile -> tempName) && in_array($uploadedFile->extension, array('jpg', 'png', 'gif', 'jpeg','mp4', 'mp3')))
                 {
                     $uploadedFile->saveAs(Yii::getAlias('@webroot/images/news/').$uploadedFile -> name);
-                    $model->news_image = $uploadedFile -> name;	
+                    $model->news_image = $uploadedFile -> name;
+					if(in_array($uploadedFile->extension, array('jpg', 'png')))
+					{
 					// generate a thumbnail image
-					Image::thumbnail('@webroot/images/news/'.$uploadedFile -> name, 640, 363)
-						->save(Yii::getAlias('@webroot/images/news/thumb/thumb_'.$uploadedFile -> name), ['quality' => 50]);
+						Image::thumbnail('@webroot/images/news/'.$uploadedFile -> name, 640, 363)
+							->save(Yii::getAlias('@webroot/images/news/thumb/thumb_'.$uploadedFile -> name), ['quality' => 50]);
+					}
+					// generate image from video
+					if(in_array($uploadedFile->extension, array('mp4', 'mp3')))
+					{
+						$ffmpeg = \FFMpeg\FFMpeg::create();
+						$video = $ffmpeg->open($uploadedFile -> name.$uploadedFile->extension);
+						$video
+							->filters()
+							->resize(new FFMpeg\Coordinate\Dimension(320, 240))
+							->synchronize();
+						$video
+							->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))
+							->save($uploadedFile->name.'.jpg');
+						$video
+							->save(new FFMpeg\Format\Video\X264(), 'export-x264.mp4')
+							->save(new FFMpeg\Format\Video\WMV(), 'export-wmv.wmv')
+							->save(new FFMpeg\Format\Video\WebM(), 'export-webm.webm');
+					}
 					
-					
+					$model->videoimage->saveAs(Yii::getAlias('@webroot/images/news/videoImage').'/'.$uploadedFile -> name.'.jpg');
+      
                 }
 				$model->published_at = date("Y-m-d H:i:s"); 
                 $model->save();
