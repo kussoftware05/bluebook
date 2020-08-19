@@ -1,3 +1,5 @@
+*
+!.gitignore
 !AdminlteAsset.php
 !AppAsset.php
 !FontawesomeAsset.php
