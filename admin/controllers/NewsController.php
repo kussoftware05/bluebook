@@ -92,7 +92,7 @@ class NewsController extends Controller
                         $video = $ffmpeg->open( Yii::getAlias('@webroot/images/news/').$uploadedFile->name);
                         $frame = $video->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds(1));
                         $frame->save(Yii::getAlias('@webroot/images/news/videoImage/') .$uploadedFile->name);
-                        $model->videoimage = $uploadedFile->name'.jpg';
+                        $model->videoimage = $uploadedFile->name.'jpg';
                     }
                 }
 				$model->published_at = date("Y-m-d H:i:s"); 
