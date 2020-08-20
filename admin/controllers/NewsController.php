@@ -12,8 +12,6 @@ use yii\web\UploadedFile;
 use yii\base\Exception;
 use yii\imagine\Image;
 
-$url = Yii::getAlias('@vendor').'\autoload.php';
-include $url;
 /**
  * NewsController implements the CRUD actions for News model.
  */
