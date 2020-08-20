@@ -87,24 +87,13 @@ class NewsController extends Controller
 					}
 					// generate image from video
 					if(in_array($uploadedFile->extension, array('mp4', 'mp3')))
-					{
-						$ffmpeg = \FFMpeg\FFMpeg::create();
-						$video = $ffmpeg->open($uploadedFile -> name.$uploadedFile->extension);
-						$video
-							->filters()
-							->resize(new FFMpeg\Coordinate\Dimension(320, 240))
-							->synchronize();
-						$video
-							->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))
-							->save($uploadedFile->name.'.jpg');
-						$video
-							->save(new FFMpeg\Format\Video\X264(), 'export-x264.mp4')
-							->save(new FFMpeg\Format\Video\WMV(), 'export-wmv.wmv')
-							->save(new FFMpeg\Format\Video\WebM(), 'export-webm.webm');
-					}
-					
-					$model->videoimage->saveAs(Yii::getAlias('@webroot/images/news/videoImage').'/'.$uploadedFile -> name.'.jpg');
-      
+                    {
+                        $ffmpeg = \FFMpeg\FFMpeg::create();
+                        $video = $ffmpeg->open( Yii::getAlias('@webroot/images/news/').$uploadedFile->name);
+                        $frame = $video->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds(1));
+                        $frame->save(Yii::getAlias('@webroot/images/news/videoImage/') .$uploadedFile->name);
+                        $model->videoimage = $uploadedFile->name'.jpg';
+                    }
                 }
 				$model->published_at = date("Y-m-d H:i:s"); 
                 $model->save();
